@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -41,6 +43,50 @@ class Artistas
     public function __construct()
     {
         $this->cancionesIdcancion = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    public function getIdartista(): ?int
+    {
+        return $this->idartista;
+    }
+
+    public function getNombre(): ?string
+    {
+        return $this->nombre;
+    }
+
+    public function setNombre(?string $nombre): static
+    {
+        $this->nombre = $nombre;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Canciones>
+     */
+    public function getCancionesIdcancion(): Collection
+    {
+        return $this->cancionesIdcancion;
+    }
+
+    public function addCancionesIdcancion(Canciones $cancionesIdcancion): static
+    {
+        if (!$this->cancionesIdcancion->contains($cancionesIdcancion)) {
+            $this->cancionesIdcancion->add($cancionesIdcancion);
+            $cancionesIdcancion->addArtistasIdartistum($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCancionesIdcancion(Canciones $cancionesIdcancion): static
+    {
+        if ($this->cancionesIdcancion->removeElement($cancionesIdcancion)) {
+            $cancionesIdcancion->removeArtistasIdartistum($this);
+        }
+
+        return $this;
     }
 
 }
