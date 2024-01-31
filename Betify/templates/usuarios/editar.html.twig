@@ -1,0 +1,16 @@
+{# templates/usuarios/editar.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Editar Usuario{% endblock %}
+
+{% block body %}
+    <h1>Editar Usuario</h1>
+
+    {# Renderizar el formulario #}
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+
+    <button type="submit">Guardar Cambios</button>
+    {{ form_end(form) }}
+{% endblock %}

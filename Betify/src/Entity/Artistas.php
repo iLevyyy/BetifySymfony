@@ -2,8 +2,6 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -31,62 +29,33 @@ class Artistas
     private $nombre = 'NULL';
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * Obtener el valor de idartista
      *
-     * @ORM\ManyToMany(targetEntity="Canciones", mappedBy="artistasIdartista")
+     * @return int
      */
-    private $cancionesIdcancion = array();
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->cancionesIdcancion = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    public function getIdartista(): ?int
+    public function getIdArtista(): int
     {
         return $this->idartista;
     }
 
+
+    /**
+     * Obtener el valor de nombre
+     *
+     * @return string|null
+     */
     public function getNombre(): ?string
     {
         return $this->nombre;
     }
 
-    public function setNombre(?string $nombre): static
+    /**
+     * Establecer el valor de nombre
+     *
+     * @param string|null $nombre
+     */
+    public function setNombre(?string $nombre): void
     {
         $this->nombre = $nombre;
-
-        return $this;
     }
-
-    /**
-     * @return Collection<int, Canciones>
-     */
-    public function getCancionesIdcancion(): Collection
-    {
-        return $this->cancionesIdcancion;
-    }
-
-    public function addCancionesIdcancion(Canciones $cancionesIdcancion): static
-    {
-        if (!$this->cancionesIdcancion->contains($cancionesIdcancion)) {
-            $this->cancionesIdcancion->add($cancionesIdcancion);
-            $cancionesIdcancion->addArtistasIdartistum($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCancionesIdcancion(Canciones $cancionesIdcancion): static
-    {
-        if ($this->cancionesIdcancion->removeElement($cancionesIdcancion)) {
-            $cancionesIdcancion->removeArtistasIdartistum($this);
-        }
-
-        return $this;
-    }
-
 }

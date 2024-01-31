@@ -2,9 +2,6 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -25,26 +22,25 @@ class Apuestas
     private $idapuesta;
 
     /**
-     * @var float|null
+     * @var float
      *
-     * @ORM\Column(name="Cuota", type="float", precision=10, scale=0, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="Cuota", type="float", precision=10, scale=0, nullable=false)
      */
-    private $cuota = NULL;
+    private $cuota;
 
     /**
-     * @var float|null
+     * @var float
      *
-     * @ORM\Column(name="Cantidad", type="float", precision=10, scale=0, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="Cantidad", type="float", precision=10, scale=0, nullable=false)
      */
-    private $cantidad = NULL;
+    private $cantidad;
 
     /**
-     * @var \DateTime|null
+     * @var \DateTime
      *
-     * @ORM\Column(name="FechaFinal", type="datetime", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="FechaFinal", type="datetime", nullable=false)
      */
-    private $fechafinal = 'NULL';
-
+    private $fechafinal;
 
     /**
      * @var \Artistas
@@ -67,109 +63,122 @@ class Apuestas
     private $cancionesIdcancion;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * Obtener el valor de idapuesta
      *
-     * @ORM\ManyToMany(targetEntity="Usuarios", mappedBy="apuestasIdapuesta")
+     * @return int
      */
-    private $usuariosIdusuario = array();
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->usuariosIdusuario = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    public function getIdapuesta(): ?int
+    public function getIdApuesta(): int
     {
         return $this->idapuesta;
     }
 
-    public function getCuota(): ?float
+    /**
+     * Establecer el valor de idapuesta
+     *
+     * @param int $idapuesta
+     */
+    public function setIdApuesta(int $idapuesta): void
+    {
+        $this->idapuesta = $idapuesta;
+    }
+
+    /**
+     * Obtener el valor de cuota
+     *
+     * @return float
+     */
+    public function getCuota(): float
     {
         return $this->cuota;
     }
 
-    public function setCuota(?float $cuota): static
+    /**
+     * Establecer el valor de cuota
+     *
+     * @param float $cuota
+     */
+    public function setCuota(float $cuota): void
     {
         $this->cuota = $cuota;
-
-        return $this;
     }
 
-    public function getCantidad(): ?float
+    /**
+     * Obtener el valor de cantidad
+     *
+     * @return float
+     */
+    public function getCantidad(): float
     {
         return $this->cantidad;
     }
 
-    public function setCantidad(?float $cantidad): static
+    /**
+     * Establecer el valor de cantidad
+     *
+     * @param float $cantidad
+     */
+    public function setCantidad(float $cantidad): void
     {
         $this->cantidad = $cantidad;
-
-        return $this;
     }
 
-    public function getFechafinal(): ?\DateTimeInterface
+    /**
+     * Obtener el valor de fechafinal
+     *
+     * @return \DateTime
+     */
+    public function getFechaFinal(): \DateTime
     {
         return $this->fechafinal;
     }
 
-    public function setFechafinal(?\DateTimeInterface $fechafinal): static
+    /**
+     * Establecer el valor de fechafinal
+     *
+     * @param \DateTime $fechafinal
+     */
+    public function setFechaFinal(\DateTime $fechafinal): void
     {
         $this->fechafinal = $fechafinal;
-
-        return $this;
     }
 
+    /**
+     * Obtener el valor de artistasIdartista
+     *
+     * @return \Artistas
+     */
     public function getArtistasIdartista(): ?Artistas
     {
         return $this->artistasIdartista;
     }
 
-    public function setArtistasIdartista(?Artistas $artistasIdartista): static
+    /**
+     * Establecer el valor de artistasIdartista
+     *
+     * @param \Artistas $artistasIdartista
+     */
+    public function setArtistasIdartista(?Artistas $artistasIdartista): void
     {
         $this->artistasIdartista = $artistasIdartista;
-
-        return $this;
     }
 
-    public function getCancionesIdcancion(): ?Canciones
+    /**
+     * Obtener el valor de cancionesIdcancion
+     *
+     * @return \Canciones
+     */
+    public function getcancionesIdcancion(): ?Canciones
     {
         return $this->cancionesIdcancion;
     }
 
-    public function setCancionesIdcancion(?Canciones $cancionesIdcancion): static
+    /**
+     * Establecer el valor de cancionesIdcancion
+     *
+     * @param \Canciones $cancionesIdcancion
+     */
+    public function setCancionesIdcancion(?Canciones $cancionesIdcancion): void
     {
         $this->cancionesIdcancion = $cancionesIdcancion;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Usuarios>
-     */
-    public function getUsuariosIdusuario(): Collection
-    {
-        return $this->usuariosIdusuario;
-    }
-
-    public function addUsuariosIdusuario(Usuarios $usuariosIdusuario): static
-    {
-        if (!$this->usuariosIdusuario->contains($usuariosIdusuario)) {
-            $this->usuariosIdusuario->add($usuariosIdusuario);
-            $usuariosIdusuario->addApuestasIdapuestum($this);
-        }
-
-        return $this;
-    }
-
-    public function removeUsuariosIdusuario(Usuarios $usuariosIdusuario): static
-    {
-        if ($this->usuariosIdusuario->removeElement($usuariosIdusuario)) {
-            $usuariosIdusuario->removeApuestasIdapuestum($this);
-        }
-
-        return $this;
     }
 }

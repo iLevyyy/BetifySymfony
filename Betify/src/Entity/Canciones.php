@@ -2,8 +2,6 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -30,68 +28,33 @@ class Canciones
      */
     private $nombre = 'NULL';
 
+
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * Obtener el valor de idcancion
      *
-     * @ORM\ManyToMany(targetEntity="Artistas", inversedBy="cancionesIdcancion")
-     * @ORM\JoinTable(name="canciones_has_artistas",
-     *   joinColumns={
-     *     @ORM\JoinColumn(name="Canciones_idCancion", referencedColumnName="idCancion")
-     *   },
-     *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="Artistas_idArtista", referencedColumnName="idArtista")
-     *   }
-     * )
+     * @return int
      */
-    private $artistasIdartista = array();
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->artistasIdartista = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    public function getIdcancion(): ?int
+    public function getIdCancion(): int
     {
         return $this->idcancion;
     }
-
+    /**
+     * Obtener el valor de nombre
+     *
+     * @return string|null
+     */
     public function getNombre(): ?string
     {
         return $this->nombre;
     }
 
-    public function setNombre(?string $nombre): static
+    /**
+     * Establecer el valor de nombre
+     *
+     * @param string|null $nombre
+     */
+    public function setNombre(?string $nombre): void
     {
         $this->nombre = $nombre;
-
-        return $this;
     }
-
-    /**
-     * @return Collection<int, Artistas>
-     */
-    public function getArtistasIdartista(): Collection
-    {
-        return $this->artistasIdartista;
-    }
-
-    public function addArtistasIdartistum(Artistas $artistasIdartistum): static
-    {
-        if (!$this->artistasIdartista->contains($artistasIdartistum)) {
-            $this->artistasIdartista->add($artistasIdartistum);
-        }
-
-        return $this;
-    }
-
-    public function removeArtistasIdartistum(Artistas $artistasIdartistum): static
-    {
-        $this->artistasIdartista->removeElement($artistasIdartistum);
-
-        return $this;
-    }
-
 }

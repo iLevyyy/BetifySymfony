@@ -1,15 +1,13 @@
 <?php
 
 namespace App\Entity;
-
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use App\Entity\Apuestas;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Usuarios
  *
- * @ORM\Table(name="usuarios", uniqueConstraints={@ORM\UniqueConstraint(name="idUsuario_UNIQUE", columns={"idUsuario"}), @ORM\UniqueConstraint(name="NombreUsuario_UNIQUE", columns={"NombreUsuario"}), @ORM\UniqueConstraint(name="Email_UNIQUE", columns={"Email"})})
+ * @ORM\Table(name="usuarios", uniqueConstraints={@ORM\UniqueConstraint(name="NombreUsuario_UNIQUE", columns={"NombreUsuario"}), @ORM\UniqueConstraint(name="idUsuario_UNIQUE", columns={"idUsuario"}), @ORM\UniqueConstraint(name="Email_UNIQUE", columns={"Email"})})
  * @ORM\Entity
  */
 class Usuarios
@@ -24,18 +22,18 @@ class Usuarios
     private $idusuario;
 
     /**
-     * @var string|null
+     * @var string
      *
-     * @ORM\Column(name="NombreUsuario", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="NombreUsuario", type="string", length=45, nullable=false)
      */
-    private $nombreusuario = 'NULL';
+    private $nombreusuario;
 
     /**
-     * @var string|null
+     * @var string
      *
-     * @ORM\Column(name="Email", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="Email", type="string", length=45, nullable=false)
      */
-    private $email = 'NULL';
+    private $email;
 
     /**
      * @var string|null
@@ -57,79 +55,94 @@ class Usuarios
      *   }
      * )
      */
-    private $apuestasIdapuesta = array();
+    // private $apuestasIdapuesta = array();
 
+    // /**
+    //  * Constructor
+    //  */
+    // public function __construct()
+    // {
+    //     $this->apuestasIdapuesta = new \Doctrine\Common\Collections\ArrayCollection();
+    // }
     /**
-     * Constructor
+     * Obtener el valor de idusuario
+     *
+     * @return int
      */
-    public function __construct()
-    {
-        $this->apuestasIdapuesta = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    public function getIdusuario(): ?int
+    public function getIdUsuario(): int
     {
         return $this->idusuario;
     }
 
-    public function getNombreusuario(): ?string
+    /**
+     * Obtener el valor de nombreusuario
+     *
+     * @return string
+     */
+    public function getNombreUsuario(): string
     {
         return $this->nombreusuario;
     }
 
-    public function setNombreusuario(?string $nombreusuario): static
+    /**
+     * Establecer el valor de nombreusuario
+     *
+     * @param string $nombreusuario
+     */
+    public function setNombreUsuario(string $nombreusuario): void
     {
         $this->nombreusuario = $nombreusuario;
-
-        return $this;
     }
 
-    public function getEmail(): ?string
+    /**
+     * Obtener el valor de email
+     *
+     * @return string
+     */
+    public function getEmail(): string
     {
         return $this->email;
     }
 
-    public function setEmail(?string $email): static
+    /**
+     * Establecer el valor de email
+     *
+     * @param string $email
+     */
+    public function setEmail(string $email): void
     {
         $this->email = $email;
-
-        return $this;
     }
 
+    /**
+     * Obtener el valor de password
+     *
+     * @return string|null
+     */
     public function getPassword(): ?string
     {
         return $this->password;
     }
 
-    public function setPassword(?string $password): static
+    /**
+     * Establecer el valor de password
+     *
+     * @param string|null $password
+     */
+    public function setPassword(?string $password): void
     {
         $this->password = $password;
-
-        return $this;
     }
 
-    /**
-     * @return Collection<int, Apuestas>
-     */
-    public function getApuestasIdapuesta(): Collection
-    {
-        return $this->apuestasIdapuesta;
-    }
+    // /**
+    //  * Obtener la colección de apuestasIdapuesta
+    //  *
+    //  * @return \Doctrine\Common\Collections\Collection
+    //  */
+    // public function getApuestasIdapuesta(): \Doctrine\Common\Collections\Collection
+    // {
+    //     return $this->apuestasIdapuesta;
+    // }
 
-    public function addApuestasIdapuestum(Apuestas $apuestasIdapuestum): static
-    {
-        if (!$this->apuestasIdapuesta->contains($apuestasIdapuestum)) {
-            $this->apuestasIdapuesta->add($apuestasIdapuestum);
-        }
-
-        return $this;
-    }
-
-    public function removeApuestasIdapuestum(Apuestas $apuestasIdapuestum): static
-    {
-        $this->apuestasIdapuesta->removeElement($apuestasIdapuestum);
-
-        return $this;
-    }
-
+   
 }

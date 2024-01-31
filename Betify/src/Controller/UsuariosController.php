@@ -1,114 +1,194 @@
 <?php
 
-
 namespace App\Controller;
 
+
+use App\Entity\Apuestas;
 use App\Entity\Usuarios;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Doctrine\DBAL\Types\IntegerType;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Doctrine\Persistence\ManagerRegistry;
+use PHPUnit\Util\Json;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+
 
 class UsuariosController extends AbstractController
 {
-    private $entityManager;
-
-    public function __construct(EntityManagerInterface $entityManager)
+    public function listarUsuarios(ManagerRegistry $managerRegistry): JsonResponse
     {
-        $this->entityManager = $entityManager;
-    }
-
-    #[Route('/usuarios/listar', name: 'listar_usuarios', methods: ['GET'])]
-    public function listarUsuarios(): JsonResponse
-    {
-        // Obtén todos los usuarios desde el repositorio de la entidad Usuarios.
-        $usuarios = $this->entityManager->getRepository(Usuarios::class)->findAll();
-
-        // Prepara un array para almacenar los datos de los usuarios.
-        $usuariosData = [];
-
-        // Itera sobre cada usuario y obtén sus características.
+        $usuarios = $managerRegistry->getRepository(Usuarios::class)->findAll();
+        // $apuestas = $managerRegistry->getRepository(Apuestas::class)->findAll();
+        $usuariosArray = [];
         foreach ($usuarios as $usuario) {
-            $usuariosData[] = [
-                'nombre_usuario' => $usuario->getNombreUsuario(),
-                'correo' => $usuario->getCorreo(),
+            $usuariosArray[] = [
+                'idusuario' => $usuario->getIdUsuario(),
+                'nombreusuario' => $usuario->getNombreUsuario(),
+                'email' => $usuario->getEmail(),
                 'password' => $usuario->getPassword(),
-                // Puedes agregar más campos según sea necesario.
             ];
         }
- 
-        // Retorna los datos de los usuarios en formato JSON.
-        return $this->json(['usuarios' => $usuariosData], Response::HTTP_OK);
+
+        return new JsonResponse($usuariosArray);
     }
 
-
-    #[Route('/usuarios/crear', name: 'crear_usuario', methods: ['POST'])]
-    public function crearUsuario(Request $request): JsonResponse
+    public function listarUsuariosId($id, ManagerRegistry $managerRegistry): JsonResponse
     {
-        $data = json_decode($request->getContent(), true);
+        $usuario = $managerRegistry->getRepository(Usuarios::class)->find($id);
 
+        if (!$usuario) {
+            throw $this->createNotFoundException('Usuario no encontrado');
+        }
+
+        $usuariosArray[] = [
+            'idusuario' => $usuario->getIdUsuario(),
+            'nombreusuario' => $usuario->getNombreUsuario(),
+            'email' => $usuario->getEmail(),
+            'password' => $usuario->getPassword(),
+        ];
+
+        return new JsonResponse($usuariosArray);
+    }
+    public function nuevoUsuario(Request $request, ManagerRegistry $managerRegistry)
+    {
+        if ($request->isMethod('POST')) {
+            $nombre = $request->request->get('nombre');
+            $email = $request->request->get('email');
+            $pwd = $request->request->get('pwd');
+
+            $usuario = $this->createUsuario($managerRegistry, $nombre, $email, $pwd);
+
+            $usuariosArray = [
+                'id' => $usuario->getIdUsuario(),
+                'nombre' => $usuario->getNombreUsuario(),
+                'email' => $usuario->getEmail(),
+                'pwd' => $usuario->getPassword(),
+            ];
+
+            return new JsonResponse($usuariosArray);
+        }
+
+        // Si no es una solicitud POST, simplemente renderiza la plantilla Twig
+        return $this->render('usuarios/nuevo.html.twig');
+    }
+
+    private function createUsuario(ManagerRegistry $managerRegistry, $nombre, $email, $pwd): Usuarios
+    {
         $usuario = new Usuarios();
+        $usuario->setNombreUsuario($nombre);
+        $usuario->setEmail($email);
+        $usuario->setPassword($pwd);
 
-        $usuario->setNombreUsuario($data['NombreUsuario']);
-        $usuario->setPassword($data['Password']); 
-        $usuario->setCorreo($data['Email']);
+        $entityManager = $managerRegistry->getManager();
+        $entityManager->persist($usuario);
+        $entityManager->flush();
 
-        $this->entityManager->persist($usuario);
-        $this->entityManager->flush();
-
-        return $this->json(['mensaje' => 'Usuario creado correctamente'], Response::HTTP_OK);
+        return $usuario;
     }
 
-    #[Route('/usuarios/update', name: 'actualizar_usuario', methods: ['PUT'])]
-    public function actualizarUsuario(Request $request): JsonResponse
+
+    public function formularioEditarUsuario(Request $request, ManagerRegistry $managerRegistry): JsonResponse
     {
-        // Decodifica el contenido JSON de la solicitud y lo convierte en un array asociativo.
-        $data = json_decode($request->getContent(), true);
+        $usuarios = $managerRegistry->getRepository(Usuarios::class)->findAll();
 
-        // Verifica si la ID está presente en el JSON.
-        if (!isset($data['id'])) {
-            return $this->json(['error' => 'ID del usuario no proporcionada'], Response::HTTP_BAD_REQUEST);
+        $choices = [];
+        foreach ($usuarios as $usuario) {
+            $choices[$usuario->getNombreUsuario()] = $usuario->getIdUsuario();
         }
 
-        // Obtén el ID del usuario y el usuario que deseas actualizar desde el repositorio.
-        $id = $data['id'];
-        $usuario = $this->entityManager->getRepository(Usuarios::class)->find($id);
+        $form = $this->createFormBuilder()
+            ->add('usuario', ChoiceType::class, [
+                'label' => 'Selecciona un Usuario',
+                'choices' => $choices,
+            ])
+            ->add('editar', SubmitType::class, ['label' => 'Editar Usuario'])
+            ->getForm();
 
-        // Verifica si el usuario existe.
-        if (!$usuario) {
-            return $this->json(['error' => 'Usuario no encontrado'], Response::HTTP_NOT_FOUND);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            $usuarioId = $data['usuario'];
+
+            return $this->redirectToRoute('editar', ['id' => $usuarioId]);
         }
 
-        // Actualiza los campos del usuario según los datos proporcionados.
-        $usuario->setNombreUsuario($data['nombre_usuario'] ?? $usuario->getNombreUsuario());
-        $usuario->setPassword($data['password'] ?? $usuario->getPassword());
-        $usuario->setCorreo($data['correo'] ?? $usuario->getCorreo());
+        return $this->render('usuarios/formuario_editar.hmtl.twig', [
 
-        // Persiste los cambios en la base de datos.
-        $this->entityManager->flush();
-
-        // Retorna una respuesta JSON indicando que el usuario se actualizó correctamente.
-        return $this->json(['mensaje' => 'Usuario actualizado correctamente'], Response::HTTP_OK);
+            'form' => $form->createView(),
+        ]);
     }
+
+
+    public function editarUsuario($id, Request $request, ManagerRegistry $managerRegistry): JsonResponse
+    {
+        $usuario = $managerRegistry->getRepository(Usuarios::class)->find($id);
+
+        if (!$usuario) {
+            throw $this->createNotFoundException('Usuario no encontrado');
+        }
+
+        $form = $this->createForm(Usuarios::class, $usuario);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $entityManager = $managerRegistry->getManager();
+            $entityManager->flush();
+
+            $clienteArray = [
+                'id' => $usuario->getIdUsuario(),
+                'nombre' => $usuario->getNombreUsuario(),
+                'email' => $usuario->getEmail(),
+                'pwd' => $usuario->getPassword(),
+            ];
+
+            return new JsonResponse($clienteArray);
+        }
+
+        return $this->render('usuarios/editar.html.twig', [
+            'form' => $form->createView(),
+            'usuario' => $usuario,
+        ]);
+    }
+
+    public function borrarUsuario(Request $request, ManagerRegistry $managerRegistry): JsonResponse
+    {
+        $form = $this->createFormBuilder()
+            ->add('id', IntegerType::class, [
+                'label' => 'ID del Usuario',
+                'attr' => ['placeholder' => 'Ingrese el ID del Usuario']
+            ])
+            ->add('borrar', SubmitType::class, ['label' => 'Borrar Usuario'])
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+
+            $idUsuario = $data['id'];
+            $em = $managerRegistry->getManager();
+            $usuario = $em->getRepository(Usuarios::class)->find($idUsuario);
+
+            if (!$usuario) {
+                throw $this->createNotFoundException('Cliente no encontrado');
+            }
+
+            $em->remove($usuario);
+            $em->flush();
+
+            return new JsonResponse(['mensaje' => 'Usuario eliminado con éxito']);
+        }
+
+        return $this->render('usuarios/borrar.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
     
-    #[Route('/usuarios/delete/{id}', name: 'eliminar_usuario', methods: ['DELETE'])]
-    public function eliminarUsuario(int $id): JsonResponse
-    {
-        // Obtén el usuario que deseas eliminar desde el repositorio.
-        $usuario = $this->entityManager->getRepository(Usuarios::class)->find($id);
-
-        // Verifica si el usuario existe.
-        if (!$usuario) {
-            return $this->json(['error' => 'Usuario no encontrado'], Response::HTTP_NOT_FOUND);
-        }
-
-        // Elimina el usuario de la base de datos.
-        $this->entityManager->remove($usuario);
-        $this->entityManager->flush();
-
-        // Retorna una respuesta JSON indicando que el usuario se eliminó correctamente.
-        return $this->json(['mensaje' => 'Usuario eliminado correctamente'], Response::HTTP_OK);
-    }
 }
