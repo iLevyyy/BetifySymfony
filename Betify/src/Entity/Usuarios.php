@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Usuarios
  *
- * @ORM\Table(name="usuarios", uniqueConstraints={@ORM\UniqueConstraint(name="Email_UNIQUE", columns={"Email"}), @ORM\UniqueConstraint(name="idUsuario_UNIQUE", columns={"idUsuario"}), @ORM\UniqueConstraint(name="NombreUsuario_UNIQUE", columns={"NombreUsuario"})})
+ * @ORM\Table(name="usuarios", uniqueConstraints={@ORM\UniqueConstraint(name="idUsuario_UNIQUE", columns={"idUsuario"}), @ORM\UniqueConstraint(name="NombreUsuario_UNIQUE", columns={"NombreUsuario"}), @ORM\UniqueConstraint(name="Email_UNIQUE", columns={"Email"})})
  * @ORM\Entity
  */
 class Usuarios

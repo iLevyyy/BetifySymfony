@@ -1,20 +1,16 @@
 <?php
 
 namespace App\Entity;
-// require_once __DIR__ . '../../vendor/autoload.php';
-require_once __DIR__ . '../../vendor/autoload.php';
-
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Http\Authentication\CustomAuthenticationSuccessHandler;
 
 /**
  * Apuestas
  *
- * @ORM\Table(name="apuestas", indexes={@ORM\Index(name="fk_Apuestas_Artistas1_idx", columns={"Artistas_idArtista"}), @ORM\Index(name="fk_Apuestas_Canciones1_idx", columns={"Canciones_idCancion"})})
+ * @ORM\Table(name="apuestas", indexes={@ORM\Index(name="fk_Apuestas_Canciones1_idx", columns={"Canciones_idCancion"}), @ORM\Index(name="fk_Apuestas_Artistas1_idx", columns={"Artistas_idArtista"})})
  * @ORM\Entity
  */
 class Apuestas
@@ -49,15 +45,6 @@ class Apuestas
      */
     private $fechafinal = 'NULL';
 
-    /**
-     * @var \Canciones
-     *
-     * @ORM\ManyToOne(targetEntity="Canciones")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="Canciones_idCancion", referencedColumnName="idCancion")
-     * })
-     */
-    private $cancionesIdcancion;
 
     /**
      * @var \Artistas
@@ -68,6 +55,16 @@ class Apuestas
      * })
      */
     private $artistasIdartista;
+
+    /**
+     * @var \Canciones
+     *
+     * @ORM\ManyToOne(targetEntity="Canciones")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="Canciones_idCancion", referencedColumnName="idCancion")
+     * })
+     */
+    private $cancionesIdcancion;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -125,18 +122,6 @@ class Apuestas
         return $this;
     }
 
-    public function getCancionesIdcancion(): ?Canciones
-    {
-        return $this->cancionesIdcancion;
-    }
-
-    public function setCancionesIdcancion(?Canciones $cancionesIdcancion): static
-    {
-        $this->cancionesIdcancion = $cancionesIdcancion;
-
-        return $this;
-    }
-
     public function getArtistasIdartista(): ?Artistas
     {
         return $this->artistasIdartista;
@@ -145,6 +130,18 @@ class Apuestas
     public function setArtistasIdartista(?Artistas $artistasIdartista): static
     {
         $this->artistasIdartista = $artistasIdartista;
+
+        return $this;
+    }
+
+    public function getCancionesIdcancion(): ?Canciones
+    {
+        return $this->cancionesIdcancion;
+    }
+
+    public function setCancionesIdcancion(?Canciones $cancionesIdcancion): static
+    {
+        $this->cancionesIdcancion = $cancionesIdcancion;
 
         return $this;
     }
@@ -175,5 +172,4 @@ class Apuestas
 
         return $this;
     }
-
 }
