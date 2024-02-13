@@ -18,6 +18,8 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class UsuariosController extends AbstractController
 {
+
+    //login
     public function listarUsuarios(ManagerRegistry $managerRegistry): JsonResponse
     {
         $usuarios = $managerRegistry->getRepository(Usuarios::class)->findAll();
@@ -35,9 +37,9 @@ class UsuariosController extends AbstractController
         return new JsonResponse($usuariosArray);
     }
 
-    public function listarUsuariosId($id, ManagerRegistry $managerRegistry): JsonResponse
+    public function listarUsuariosId($email, ManagerRegistry $managerRegistry): JsonResponse
     {
-        $usuario = $managerRegistry->getRepository(Usuarios::class)->find($id);
+        $usuario = $managerRegistry->getRepository(Usuarios::class)->find($email);
 
         if (!$usuario) {
             throw $this->createNotFoundException('Usuario no encontrado');
@@ -52,6 +54,9 @@ class UsuariosController extends AbstractController
 
         return new JsonResponse($usuariosArray);
     }
+
+
+    //registro
     public function nuevoUsuario(Request $request, ManagerRegistry $managerRegistry)
     {
         if ($request->isMethod('POST')) {
@@ -89,16 +94,16 @@ class UsuariosController extends AbstractController
         return $usuario;
     }
 
-
+    //editar usuario
     public function formularioEditarUsuario(Request $request, ManagerRegistry $managerRegistry): JsonResponse
     {
         $usuarios = $managerRegistry->getRepository(Usuarios::class)->findAll();
-
+    
         $choices = [];
         foreach ($usuarios as $usuario) {
             $choices[$usuario->getNombreUsuario()] = $usuario->getIdUsuario();
         }
-
+    
         $form = $this->createFormBuilder()
             ->add('usuario', ChoiceType::class, [
                 'label' => 'Selecciona un Usuario',
@@ -106,18 +111,17 @@ class UsuariosController extends AbstractController
             ])
             ->add('editar', SubmitType::class, ['label' => 'Editar Usuario'])
             ->getForm();
-
+    
         $form->handleRequest($request);
-
+    
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
             $usuarioId = $data['usuario'];
-
+    
             return $this->redirectToRoute('editar', ['id' => $usuarioId]);
         }
-
-        return $this->render('usuarios/formuario_editar.hmtl.twig', [
-
+    
+        return $this->render('usuarios/formuario_editar.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -155,7 +159,8 @@ class UsuariosController extends AbstractController
             'usuario' => $usuario,
         ]);
     }
-
+    
+    //borrar ususario
     public function borrarUsuario(Request $request, ManagerRegistry $managerRegistry): JsonResponse
     {
         $form = $this->createFormBuilder()
