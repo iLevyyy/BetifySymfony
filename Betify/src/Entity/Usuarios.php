@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Entity;
+
 use App\Entity\Apuestas;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -42,6 +43,12 @@ class Usuarios
      */
     private $password = 'NULL';
 
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="isAdmin", type="boolean", length=45, nullable=true)
+     */
+    private $isadmin = '0';
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
@@ -144,5 +151,5 @@ class Usuarios
     //     return $this->apuestasIdapuesta;
     // }
 
-   
+
 }

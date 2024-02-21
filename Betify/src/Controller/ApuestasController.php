@@ -31,7 +31,6 @@ class ApuestasController extends AbstractController
                 'artistasIdartista' => $Artistas[0]->getNombre(),
                 'cancionesIdcancion' => $Canciones,
             ];
-            
         }
 
         return new JsonResponse($ApuestasArray);
