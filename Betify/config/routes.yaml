@@ -36,3 +36,7 @@ artistas_listar:
 apuesta_listar:
     path: /apuesta/listar
     controller: App\Controller\ApuestasController::listarApuestas
+
+apuesta_crear:
+    path: /apuesta/crear
+    controller: App\Controller\ApuestasController::crearApuesta

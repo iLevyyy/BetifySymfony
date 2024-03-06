@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Entity\Apuestas;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -62,15 +63,12 @@ class Usuarios
      *   }
      * )
      */
-    // private $apuestasIdapuesta = array();
+     private $apuestas;
 
-    // /**
-    //  * Constructor
-    //  */
-    // public function __construct()
-    // {
-    //     $this->apuestasIdapuesta = new \Doctrine\Common\Collections\ArrayCollection();
-    // }
+     public function addApuesta(Apuestas $apuesta): void
+{
+    $this->apuestas[] = $apuesta;
+}
     /**
      * Obtener el valor de idusuario
      *

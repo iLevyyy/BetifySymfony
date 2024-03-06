@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -61,7 +62,24 @@ class Apuestas
      * })
      */
     private $cancionesIdcancion;
-
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="Usuarios", inversedBy="apuestasIdapuesta")
+     * @ORM\JoinTable(name="usuarios_has_apuestas",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="Apuestas_idApuesta", referencedColumnName="idApuesta")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="Usuarios_idUsuario", referencedColumnName="idUsuario")
+     *   }
+     * )
+     */
+    private $usuarios;
+    public function __construct()
+    {
+        $this->usuarios = new ArrayCollection();
+    }
     /**
      * Obtener el valor de idapuesta
      *
