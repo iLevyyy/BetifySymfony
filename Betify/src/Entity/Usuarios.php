@@ -40,9 +40,10 @@ class Usuarios
     /**
      * @var int
      *
-     * @ORM\Column(name="Creditos", type="integer", nullable=false)
+     * @ORM\Column(name="Creditos", type="integer", nullable=false, options={"default"=0})
      */
-    private $creditos;
+    private $creditos = 0;
+
 
     /**
      * @var string|null
