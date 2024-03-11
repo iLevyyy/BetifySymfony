@@ -38,6 +38,13 @@ class Usuarios
     private $email;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="Creditos", type="integer", nullable=false)
+     */
+    private $creditos;
+
+    /**
      * @var string|null
      *
      * @ORM\Column(name="Password", type="string", length=45, nullable=true, options={"default"="NULL"})
@@ -63,12 +70,12 @@ class Usuarios
      *   }
      * )
      */
-     private $apuestas;
+    private $apuestas;
 
-     public function addApuesta(Apuestas $apuesta): void
-{
-    $this->apuestas[] = $apuesta;
-}
+    public function addApuesta(Apuestas $apuesta): void
+    {
+        $this->apuestas[] = $apuesta;
+    }
     /**
      * Obtener el valor de idusuario
      *
@@ -77,6 +84,10 @@ class Usuarios
     public function getIdUsuario(): int
     {
         return $this->idusuario;
+    }
+    public function getCreditos(): int
+    {
+        return $this->creditos;
     }
 
     /**
@@ -87,6 +98,10 @@ class Usuarios
     public function getNombreUsuario(): string
     {
         return $this->nombreusuario;
+    }
+    public function setCreditos(int $creditos): void
+    {
+        $this->creditos = $creditos;
     }
 
     /**

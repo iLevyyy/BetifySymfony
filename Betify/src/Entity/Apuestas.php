@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use DateTime;
 
 /**
  * Apuestas
@@ -18,7 +19,7 @@ class Apuestas
      *
      * @ORM\Column(name="idApuesta", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $idapuesta;
 
@@ -199,4 +200,16 @@ class Apuestas
     {
         $this->cancionesIdcancion = $cancionesIdcancion;
     }
+
+    public function createFechaFinal()
+    {
+        // Obtener la fecha y hora actual
+        $fechaActual = new DateTime();
+    
+        // Establecer la hora a las 23:59:59
+        $fechaActual->setTime(23, 59, 59);
+    
+        return $fechaActual;
+    }
+    
 }

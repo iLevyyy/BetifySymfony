@@ -17,7 +17,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManagerInterface;
 
 class ApuestasController extends AbstractController
-{   
+{
     private $entityManager;
 
     public function __construct(EntityManagerInterface $entityManager)
@@ -43,7 +43,7 @@ class ApuestasController extends AbstractController
         return new JsonResponse($ApuestasArray);
     }
 
-    public function crearApuesta(Request $request, EntityManagerInterface $entityManager): JsonResponse
+    public function crearApuestas(Request $request, EntityManagerInterface $entityManager): JsonResponse
     {
         // Deserializar datos de la apuesta recibidos de Postman
         $datosApuesta = json_decode($request->getContent(), true);
@@ -70,5 +70,24 @@ class ApuestasController extends AbstractController
 
         return new JsonResponse(['mensaje' => 'Apuesta creada y asociada al usuario exitosamente']);
     }
-    }
+    public function crearApuesta(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
 
+        $apuesta = new Apuestas();
+
+        $apuesta->setCuota($data['Cuota']);
+        $apuesta->setCantidad($data['Cantidad']);
+        $apuesta->setFechaFinal($apuesta->createFechaFinal());
+        $apuesta->setArtistasIdartista($data['IdArtista']);
+        $apuesta->setCancionesIdcancion($data['IdCancion']);
+
+        if ($apuesta->getCantidad() > $user->getCreditos()) {
+            return $this->json(['mensaje' => 'No se pueden apostar mas creditos de los disponibles', 'success' => false], Response::HTTP_BAD_REQUEST);
+        }
+
+        $this->entityManager->persist($apuesta);
+        $this->entityManager->flush();
+        return $this->json(['mensaje' => 'Apuesta creada correctamente', 'success' => true], Response::HTTP_OK);
+    }
+}
