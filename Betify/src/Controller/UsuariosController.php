@@ -34,7 +34,7 @@ class UsuariosController extends AbstractController
         $usuario = $this->entityManager->getRepository(Usuarios::class)->findOneBy(['email' => $email, 'password' => $password]);
 
         if ($usuario != null) {
-            $id = $usuario->getId();
+            $id = $usuario->getIdUsuario();
             return $this->json(['boolean'=> true,'token'=>$id], Response::HTTP_OK);
         } else {
             return $this->json(['boolean'=> false], Response::HTTP_OK);
