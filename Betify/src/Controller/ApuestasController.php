@@ -28,18 +28,15 @@ class ApuestasController extends AbstractController
     public function listarApuestas(ManagerRegistry $managerRegistry): JsonResponse
     {
         $Apuestas = $managerRegistry->getRepository(Apuestas::class)->findAll();
-        $Canciones = $managerRegistry->getRepository(Canciones::class)->findAll();
-        $Artistas = $managerRegistry->getRepository(Artistas::class)->findAll();
 
         $ApuestasArray = [];
         foreach ($Apuestas as $Apuesta) {
             $ApuestasArray[] = [
-                'idapuesta' => $Apuesta->getIdApuesta(),
                 'cuota' => $Apuesta->getCuota(),
                 'cantidad' => $Apuesta->getCantidad(),
                 'fechafinal' => $Apuesta->getFechaFinal(),
-                'artistasIdartista' => $Apuesta->getArtistasIdArtista()->getIdArtista(),
-                'cancionesIdcancion' => $Apuesta->getcancionesIdCancion()->getIdCancion(),
+                'artistasIdartista' => $Apuesta->getArtistasIdArtista()->getNombre(),
+                'cancionesIdcancion' => $Apuesta->getcancionesIdCancion()->getNombre(),
             ];
         }
 

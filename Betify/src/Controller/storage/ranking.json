@@ -1,20 +1,62 @@
 [
     {
         "Rango": 1,
-        "Cancion": "Beautiful Things",
-        "Artista": "Tate McRae",
-        "   ": 5102204
+        "Cancion": "we can't be friends (wait for your love)",
+        "Artista": "Ariana Grande",
+        "Reproducciones": 6963090
     },
     {
         "Rango": 2,
-        "Cancion": "TEXAS HOLD 'EM",
-        "Artista": "Beyoncé",
-        "Reproducciones": 4968264
+        "Cancion": "Beautiful Things",
+        "Artista": "Benson Boone",
+        "Reproducciones": 6350171
     },
     {
         "Rango": 3,
+        "Cancion": "End of Beginning",
+        "Artista": "Djo",
+        "Reproducciones": 5685599
+    },
+    {
+        "Rango": 4,
         "Cancion": "CARNIVAL",
-        "Artista": "¥$, Kanye West, Ty Dolla $ign",
-        "Reproducciones": 4814921
+        "Artista": "¥$",
+        "Reproducciones": 5307750
+    },
+    {
+        "Rango": 5,
+        "Cancion": "greedy",
+        "Artista": "Tate McRae",
+        "Reproducciones": 4562325
+    },
+    {
+        "Rango": 6,
+        "Cancion": "Cruel Summer",
+        "Artista": "Taylor Swift",
+        "Reproducciones": 4322257
+    },
+    {
+        "Rango": 7,
+        "Cancion": "yes, and?",
+        "Artista": "Ariana Grande",
+        "Reproducciones": 4182046
+    },
+    {
+        "Rango": 8,
+        "Cancion": "Lose Control",
+        "Artista": "Teddy Swims",
+        "Reproducciones": 3915201
+    },
+    {
+        "Rango": 9,
+        "Cancion": "One Of The Girls (with JENNIE, Lily Rose Depp)",
+        "Artista": "The Weeknd",
+        "Reproducciones": 3892160
+    },
+    {
+        "Rango": 10,
+        "Cancion": "the boy is mine",
+        "Artista": "Ariana Grande",
+        "Reproducciones": 3703778
     }
 ]
