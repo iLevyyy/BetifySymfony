@@ -28,6 +28,22 @@ class Canciones
      */
     private $nombre = 'NULL';
 
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="Reproducciones", type="integer", nullable=false)
+     */
+    private $reproducciones;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="Puesto", type="integer", nullable=false)
+     */
+    private $puesto;
+
+
+
 
     /**
      * Obtener el valor de idcancion
