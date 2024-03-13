@@ -1,62 +1,303 @@
 [
     {
-        "Rango": 1,
-        "Cancion": "we can't be friends (wait for your love)",
-        "Artista": "Ariana Grande",
-        "Reproducciones": 6963090
+      "Rango": 1,
+      "Artista": "Ariana Grande",
+      "Cancion": "we can't be friends (wait for your love)",
+      "Reproducciones": 6963090
     },
     {
-        "Rango": 2,
-        "Cancion": "Beautiful Things",
-        "Artista": "Benson Boone",
-        "Reproducciones": 6350171
+      "Rango": 2,
+      "Artista": "Benson Boone",
+      "Cancion": "Beautiful Things",
+      "Reproducciones": 6350171
     },
     {
-        "Rango": 3,
-        "Cancion": "End of Beginning",
-        "Artista": "Djo",
-        "Reproducciones": 5685599
+      "Rango": 3,
+      "Artista": "Djo",
+      "Cancion": "End of Beginning",
+      "Reproducciones": 5685599
     },
     {
-        "Rango": 4,
-        "Cancion": "CARNIVAL",
-        "Artista": "¥$",
-        "Reproducciones": 5307750
+      "Rango": 4,
+      "Artista": "¥$, Kanye West, Ty Dolla $ign, Rich The Kid, Playboi Carti",
+      "Cancion": "CARNIVAL",
+      "Reproducciones": 5307750
     },
     {
-        "Rango": 5,
-        "Cancion": "greedy",
-        "Artista": "Tate McRae",
-        "Reproducciones": 4562325
+      "Rango": 5,
+      "Artista": "Tate McRae",
+      "Cancion": "greedy",
+      "Reproducciones": 4562325
     },
     {
-        "Rango": 6,
-        "Cancion": "Cruel Summer",
-        "Artista": "Taylor Swift",
-        "Reproducciones": 4322257
+      "Rango": 6,
+      "Artista": "Taylor Swift",
+      "Cancion": "Cruel Summer",
+      "Reproducciones": 4322257
     },
     {
-        "Rango": 7,
-        "Cancion": "yes, and?",
-        "Artista": "Ariana Grande",
-        "Reproducciones": 4182046
+      "Rango": 7,
+      "Artista": "Ariana Grande",
+      "Cancion": "yes, and?",
+      "Reproducciones": 4182046
     },
     {
-        "Rango": 8,
-        "Cancion": "Lose Control",
-        "Artista": "Teddy Swims",
-        "Reproducciones": 3915201
+      "Rango": 8,
+      "Artista": "Teddy Swims",
+      "Cancion": "Lose Control",
+      "Reproducciones": 3915201
     },
     {
-        "Rango": 9,
-        "Cancion": "One Of The Girls (with JENNIE, Lily Rose Depp)",
-        "Artista": "The Weeknd",
-        "Reproducciones": 3892160
+      "Rango": 9,
+      "Artista": "The Weeknd, JENNIE, Lily-Rose Depp",
+      "Cancion": "One Of The Girls (with JENNIE, Lily Rose Depp)",
+      "Reproducciones": 3892160
     },
     {
-        "Rango": 10,
-        "Cancion": "the boy is mine",
-        "Artista": "Ariana Grande",
-        "Reproducciones": 3703778
+      "Rango": 10,
+      "Artista": "Ariana Grande",
+      "Cancion": "the boy is mine",
+      "Reproducciones": 3703778
+    },
+    {
+      "Rango": 11,
+      "Artista": "Beyoncé",
+      "Cancion": "TEXAS HOLD 'EM",
+      "Reproducciones": 3688479
+    },
+    {
+      "Rango": 12,
+      "Artista": "Xavi",
+      "Cancion": "La Diabla",
+      "Reproducciones": 3677341
+    },
+    {
+      "Rango": 13,
+      "Artista": "Mitski",
+      "Cancion": "My Love Mine All Mine",
+      "Reproducciones": 3668765
+    },
+    {
+      "Rango": 14,
+      "Artista": "Ariana Grande",
+      "Cancion": "bye",
+      "Reproducciones": 3628025
+    },
+    {
+      "Rango": 15,
+      "Artista": "FloyyMenor, Cris Mj",
+      "Cancion": "Gata Only",
+      "Reproducciones": 3587591
+    },
+    {
+      "Rango": 16,
+      "Artista": "Ariana Grande",
+      "Cancion": "eternal sunshine",
+      "Reproducciones": 3529581
+    },
+    {
+      "Rango": 17,
+      "Artista": "Ariana Grande",
+      "Cancion": "supernatural",
+      "Reproducciones": 3296798
+    },
+    {
+      "Rango": 18,
+      "Artista": "Noah Kahan",
+      "Cancion": "Stick Season",
+      "Reproducciones": 3131669
+    },
+    {
+      "Rango": 19,
+      "Artista": "Ariana Grande",
+      "Cancion": "don't wanna break up again",
+      "Reproducciones": 3128618
+    },
+    {
+      "Rango": 20,
+      "Artista": "Feid, ATL Jacob",
+      "Cancion": "LUNA",
+      "Reproducciones": 3006458
+    },
+    {
+      "Rango": 21,
+      "Artista": "Travis Scott, Playboi Carti",
+      "Cancion": "FE!N (feat. Playboi Carti)",
+      "Reproducciones": 2980642
+    },
+    {
+      "Rango": 22,
+      "Artista": "Ariana Grande",
+      "Cancion": "true story",
+      "Reproducciones": 2968036
+    },
+    {
+      "Rango": 23,
+      "Artista": "SZA",
+      "Cancion": "Saturn",
+      "Reproducciones": 2921216
+    },
+    {
+      "Rango": 24,
+      "Artista": "21 Savage",
+      "Cancion": "redrum",
+      "Reproducciones": 2908975
+    },
+    {
+      "Rango": 25,
+      "Artista": "Ariana Grande",
+      "Cancion": "intro (end of the world)",
+      "Reproducciones": 2794555
+    },
+    {
+      "Rango": 26,
+      "Artista": "Ariana Grande",
+      "Cancion": "i wish i hated you",
+      "Reproducciones": 2786737
+    },
+    {
+      "Rango": 27,
+      "Artista": "Arctic Monkeys",
+      "Cancion": "I Wanna Be Yours",
+      "Reproducciones": 2643500
+    },
+    {
+      "Rango": 28,
+      "Artista": "Jack Harlow",
+      "Cancion": "Lovin On Me",
+      "Reproducciones": 2616226
+    },
+    {
+      "Rango": 29,
+      "Artista": "Natasha Bedingfield",
+      "Cancion": "Unwritten",
+      "Reproducciones": 2599959
+    },
+    {
+      "Rango": 30,
+      "Artista": "Ariana Grande",
+      "Cancion": "imperfect for you",
+      "Reproducciones": 2555385
+    },
+    {
+      "Rango": 31,
+      "Artista": "YG Marley",
+      "Cancion": "Praise Jah In The Moonlight",
+      "Reproducciones": 2527603
+    },
+    {
+      "Rango": 32,
+      "Artista": "Xavi",
+      "Cancion": "La Víctima",
+      "Reproducciones": 2517313
+    },
+    {
+      "Rango": 33,
+      "Artista": "Myke Towers",
+      "Cancion": "LA FALDA",
+      "Reproducciones": 2410619
+    },
+    {
+      "Rango": 34,
+      "Artista": "Jung Kook, Latto",
+      "Cancion": "Seven (feat. Latto) (Explicit Ver.)",
+      "Reproducciones": 2247512
+    },
+    {
+      "Rango": 35,
+      "Artista": "Lord Huron",
+      "Cancion": "The Night We Met",
+      "Reproducciones": 2241972
+    },
+    {
+      "Rango": 36,
+      "Artista": "Bad Bunny, Feid",
+      "Cancion": "PERRO NEGRO",
+      "Reproducciones": 2226830
+    },
+    {
+      "Rango": 37,
+      "Artista": "Tyla",
+      "Cancion": "Water",
+      "Reproducciones": 2214687
+    },
+    {
+      "Rango": 38,
+      "Artista": "Bryson Tiller",
+      "Cancion": "Whatever She Wants",
+      "Reproducciones": 2212527
+    },
+    {
+      "Rango": 39,
+      "Artista": "Ariana Grande",
+      "Cancion": "Saturn Returns Interlude",
+      "Reproducciones": 2184824
+    },
+    {
+      "Rango": 40,
+      "Artista": "The Weeknd, Daft Punk",
+      "Cancion": "Starboy",
+      "Reproducciones": 2163040
+    },
+    {
+      "Rango": 41,
+      "Artista": "The Weeknd, Playboi Carti, Madonna",
+      "Cancion": "Popular (with Playboi Carti & Madonna)",
+      "Reproducciones": 2152656
+    },
+    {
+      "Rango": 42,
+      "Artista": "KAROL G, Peso Pluma",
+      "Cancion": "QLONA",
+      "Reproducciones": 2149069
+    },
+    {
+      "Rango": 43,
+      "Artista": "Dua Lipa",
+      "Cancion": "Houdini",
+      "Reproducciones": 2145235
+    },
+    {
+      "Rango": 44,
+      "Artista": "Kenya Grace",
+      "Cancion": "Strangers",
+      "Reproducciones": 2125132
+    },
+    {
+      "Rango": 45,
+      "Artista": "Zach Bryan, Kacey Musgraves",
+      "Cancion": "I Remember Everything (feat. Kacey Musgraves)",
+      "Reproducciones": 2089745
+    },
+    {
+      "Rango": 46,
+      "Artista": "Ariana Grande, Nonna",
+      "Cancion": "ordinary things (feat. Nonna)",
+      "Reproducciones": 2064626
+    },
+    {
+      "Rango": 47,
+      "Artista": "Miley Cyrus",
+      "Cancion": "Flowers",
+      "Reproducciones": 2034996
+    },
+    {
+      "Rango": 48,
+      "Artista": "Olivia Rodrigo",
+      "Cancion": "vampire",
+      "Reproducciones": 2031204
+    },
+    {
+      "Rango": 49,
+      "Artista": "Dua Lipa",
+      "Cancion": "Training Season",
+      "Reproducciones": 1996108
+    },
+    {
+      "Rango": 50,
+      "Artista": "Natanael Cano, Oscar Maydon",
+      "Cancion": "Madonna",
+      "Reproducciones": 1958324
     }
-]
+  ]
+  

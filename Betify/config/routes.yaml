@@ -41,3 +41,17 @@ apuesta_crear:
     path: /apuestas/crear
     controller: App\Controller\ApuestasController::crearApuesta
     methods: ['POST']
+
+
+
+
+
+
+
+
+
+
+
+Json_BBDD:
+    path: /insertar-datos-desde-json
+    controller: App\Controller\storage\DataController::insertarDatosDesdeJson

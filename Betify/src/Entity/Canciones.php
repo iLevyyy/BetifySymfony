@@ -73,4 +73,27 @@ class Canciones
     {
         $this->nombre = $nombre;
     }
+    public function getReproducciones(): ?int
+    {
+        return $this->reproducciones;
+    }
+
+    public function setReproducciones(int $reproducciones): self
+    {
+        $this->reproducciones = $reproducciones;
+
+        return $this;
+    }
+
+    public function getPuesto(): ?int
+    {
+        return $this->puesto;
+    }
+
+    public function setPuesto(int $puesto): self
+    {
+        $this->puesto = $puesto;
+
+        return $this;
+    }
 }
