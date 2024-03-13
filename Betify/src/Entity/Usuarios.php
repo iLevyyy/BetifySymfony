@@ -44,7 +44,6 @@ class Usuarios
      */
     private $creditos = 0;
 
-
     /**
      * @var string|null
      *
