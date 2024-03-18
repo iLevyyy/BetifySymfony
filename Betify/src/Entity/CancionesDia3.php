@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * CancionesDia3
  *
- * @ORM\Table(name="CancionesDia3", uniqueConstraints={@ORM\UniqueConstraint(name="idCancion_UNIQUE", columns={"idCancion"})})
+ * @ORM\Table(name="cancionesdia3", uniqueConstraints={@ORM\UniqueConstraint(name="idCancion_UNIQUE", columns={"idCancion"})})
  * @ORM\Entity
  */
 class CancionesDia3
@@ -72,5 +72,28 @@ class CancionesDia3
     public function setNombre(?string $nombre): void
     {
         $this->nombre = $nombre;
+    }
+    public function getReproducciones(): ?int
+    {
+        return $this->reproducciones;
+    }
+
+    public function setReproducciones(int $reproducciones): self
+    {
+        $this->reproducciones = $reproducciones;
+
+        return $this;
+    }
+
+    public function getPuesto(): ?int
+    {
+        return $this->puesto;
+    }
+
+    public function setPuesto(int $puesto): self
+    {
+        $this->puesto = $puesto;
+
+        return $this;
     }
 }
