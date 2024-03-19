@@ -19,6 +19,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManagerInterface;
 
+
 class AlgoritmoController extends AbstractController
 {
     private $entityManager;
@@ -35,31 +36,42 @@ class AlgoritmoController extends AbstractController
         $cancionesDia2 = $this->entityManager->getRepository(CancionesDia2::class)->findAll();
         $cancionesDia3 = $this->entityManager->getRepository(CancionesDia3::class)->findAll();
 
+        $allSongs = [];
+        $allSongs[0] = [$cancionesDia0];
+        $allSongs[1] = [$cancionesDia1];
+        $allSongs[2] = [$cancionesDia2];
+        $allSongs[3] = [$cancionesDia3];
 
-        $output = "Canciones del día 0:<br>";
-        foreach ($cancionesDia0 as $cancion) {
-            $output .= $cancion . "<br>";
+        return($allSongs);
+    }
+
+    public function calcularCuota(EntityManagerInterface $entityManager){
+        $algoritmoController = new AlgoritmoController($entityManager); // Asegúrate de haber obtenido $entityManager de alguna manera
+        $allSongs = $algoritmoController->getSongs(); 
+        $allSongsCopoy = $allSongs;
+        foreach ($allSongs as $diaFake) {
+            foreach($diaFake as $dia){
+                foreach($dia as $cancion){
+                    $arrayCancion = [
+                        'idcancion' => $cancion->getIdcancion(),
+                        'nombre' => $cancion->getNombre(),
+                        'reproducciones' => $cancion->getReproducciones(),
+                        'puesto' => $cancion->getPuesto()
+                    ];
+                    $cancion = $arrayCancion;
+                    //dd($cancion);
+                }
+                dd($dia);
+            }
         }
-
-        $output .= "Canciones del día 1:<br>";
-        foreach ($cancionesDia1 as $cancion) {
-            $output .= $cancion . "<br>";
+        dd($allSongs);
+        $nombresDia0 = [];
+        for ($i=0; $i < 10 ; $i++) { 
+           $nombre = $allSongs[0][0][$i]->getNombre();
+           array_push($nombresDia0,$nombre);
         }
-
-        $output .= "Canciones del día 2:<br>";
-        foreach ($cancionesDia2 as $cancion) {
-            $output .= $cancion . "<br>";
+        for ($i=0; $i <10 ; $i++) { 
+            if($nombresDia0[$i]);
         }
-
-        $output .= "Canciones del día 3:<br>";
-        foreach ($cancionesDia3 as $cancion) {
-            $output .= $cancion . "<br>";
-        }
-
-        // Crear un objeto Response con la cadena como contenido
-        $response = new Response($output);
-
-        // Retornar el objeto Response
-        return $response;
     }
 }

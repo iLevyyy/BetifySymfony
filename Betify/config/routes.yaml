@@ -44,7 +44,7 @@ apuesta_crear:
 
 alogirtmo_listar:
     path: /algoritmo/listar
-    controller: App\Controller\AlgoritmoController::getSongs
+    controller: App\Controller\AlgoritmoController::calcularCuota
     methods: ['GET']
 
 Json_BBDD:
