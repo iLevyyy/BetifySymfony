@@ -46,3 +46,8 @@ alogirtmo_listar:
     path: /algoritmo/listar
     controller: App\Controller\AlgoritmoController::getSongs
     methods: ['GET']
+
+Json_BBDD:
+    path: /insertar-datos-desde-json
+    controller: App\Controller\storage\DataController::insertarDatosDesdeJson
+
