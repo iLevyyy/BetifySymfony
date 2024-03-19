@@ -41,3 +41,8 @@ apuesta_crear:
     path: /apuestas/crear
     controller: App\Controller\ApuestasController::crearApuesta
     methods: ['POST']
+
+alogirtmo_listar:
+    path: /algoritmo/listar
+    controller: App\Controller\AlgoritmoController::getSongs
+    methods: ['GET']
