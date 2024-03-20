@@ -38,6 +38,14 @@ class Apuestas
     private $cantidad;
 
     /**
+     * @var string|null
+     *
+     * @ORM\Column(name="Prediccion", type="string", length=45, nullable=true, options={"default"="NULL"})
+     */
+    private $prediccion = 'NULL';
+
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="FechaFinal", type="datetime", nullable=false)
@@ -205,11 +213,10 @@ class Apuestas
     {
         // Obtener la fecha y hora actual
         $fechaActual = new DateTime();
-    
+
         // Establecer la hora a las 23:59:59
         $fechaActual->setTime(23, 59, 59);
-    
+
         return $fechaActual;
     }
-    
 }

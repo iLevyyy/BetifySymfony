@@ -18,7 +18,7 @@ use PHPUnit\Util\Json;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManagerInterface;
-
+use Symfony\Component\Validator\Constraints\Length;
 
 class AlgoritmoController extends AbstractController
 {
@@ -48,27 +48,14 @@ class AlgoritmoController extends AbstractController
     public function calcularCuota(EntityManagerInterface $entityManager){
         $algoritmoController = new AlgoritmoController($entityManager); // Asegúrate de haber obtenido $entityManager de alguna manera
         $allSongs = $algoritmoController->getSongs(); 
-        $allSongsCopoy = $allSongs;
-        foreach ($allSongs as $diaFake) {
-            foreach($diaFake as $dia){
-                foreach($dia as $cancion){
-                    $arrayCancion = [
-                        'idcancion' => $cancion->getIdcancion(),
-                        'nombre' => $cancion->getNombre(),
-                        'reproducciones' => $cancion->getReproducciones(),
-                        'puesto' => $cancion->getPuesto()
-                    ];
-                    $cancion = $arrayCancion;
-                    //dd($cancion);
-                }
-                dd($dia);
-            }
-        }
-        dd($allSongs);
         $nombresDia0 = [];
-        for ($i=0; $i < 10 ; $i++) { 
+        for ($i=0; $i < 10 ; $i++) {  //Guarda los nombres de las 10 canciones a buscar
            $nombre = $allSongs[0][0][$i]->getNombre();
            array_push($nombresDia0,$nombre);
+        }
+        for ($i=0; $i < sizeof($allSongs) ; $i++) { 
+            $allSongs[$i][0];
+
         }
         for ($i=0; $i <10 ; $i++) { 
             if($nombresDia0[$i]);
