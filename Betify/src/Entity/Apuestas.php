@@ -238,7 +238,6 @@ class Apuestas
 
         // Establecer la hora a las 17:10:00
         $fechaActual->setTime(17, 10, 00);
-        dd($fechaActual);
         return $fechaActual;
     }
 }

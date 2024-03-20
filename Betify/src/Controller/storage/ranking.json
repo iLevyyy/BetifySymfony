@@ -1,123 +1,102 @@
 [
-    {
-      "Rango": 1,
-      "Artista": "Ariana Grande",
-      "Cancion": "we can't be friends (wait for your love)",
-      "Reproducciones": 6963090
-    },
-    {
-      "Rango": 2,
-      "Artista": "Benson Boone",
-      "Cancion": "Beautiful Things",
-      "Reproducciones": 6350171
-    },
-    {
-      "Rango": 3,
-      "Artista": "Djo",
-      "Cancion": "End of Beginning",
-      "Reproducciones": 5685599
-    },
-    {
-      "Rango": 4,
-      "Artista": "¥$, Kanye West, Ty Dolla $ign, Rich The Kid, Playboi Carti",
-      "Cancion": "CARNIVAL",
-      "Reproducciones": 5307750
-    },
-    {
-      "Rango": 5,
-      "Artista": "Tate McRae",
-      "Cancion": "greedy",
-      "Reproducciones": 4562325
-    },
-    {
-      "Rango": 6,
-      "Artista": "Taylor Swift",
-      "Cancion": "Cruel Summer",
-      "Reproducciones": 4322257
-    },
-    {
-      "Rango": 7,
-      "Artista": "Ariana Grande",
-      "Cancion": "yes, and?",
-      "Reproducciones": 4182046
-    },
-    {
-      "Rango": 8,
-      "Artista": "Teddy Swims",
-      "Cancion": "Lose Control",
-      "Reproducciones": 3915201
-    },
-    {
-      "Rango": 9,
-      "Artista": "The Weeknd, JENNIE, Lily-Rose Depp",
-      "Cancion": "One Of The Girls (with JENNIE, Lily Rose Depp)",
-      "Reproducciones": 3892160
-    },
-    {
-      "Rango": 10,
-      "Artista": "Ariana Grande",
-      "Cancion": "the boy is mine",
-      "Reproducciones": 3703778
-    },
-    {
-      "Rango": 11,
-      "Artista": "Beyoncé",
-      "Cancion": "TEXAS HOLD 'EM",
-      "Reproducciones": 3688479
-    },
-    {
-      "Rango": 12,
-      "Artista": "Xavi",
-      "Cancion": "La Diabla",
-      "Reproducciones": 3677341
-    },
-    {
-      "Rango": 13,
-      "Artista": "Mitski",
-      "Cancion": "My Love Mine All Mine",
-      "Reproducciones": 3668765
-    },
-    {
-      "Rango": 14,
-      "Artista": "Ariana Grande",
-      "Cancion": "bye",
-      "Reproducciones": 3628025
-    },
-    {
-      "Rango": 15,
-      "Artista": "FloyyMenor, Cris Mj",
-      "Cancion": "Gata Only",
-      "Reproducciones": 3587591
-    },
-    {
-      "Rango": 16,
-      "Artista": "Ariana Grande",
-      "Cancion": "eternal sunshine",
-      "Reproducciones": 3529581
-    },
-    {
-      "Rango": 17,
-      "Artista": "Ariana Grande",
-      "Cancion": "supernatural",
-      "Reproducciones": 3296798
-    },
-    {
-      "Rango": 18,
-      "Artista": "Noah Kahan",
-      "Cancion": "Stick Season",
-      "Reproducciones": 3131669
-    },
-    {
-      "Rango": 19,
-      "Artista": "Ariana Grande",
-      "Cancion": "don't wanna break up again",
-      "Reproducciones": 3128618
-    },
-    {
-      "Rango": 20,
-      "Artista": "Feid, ATL Jacob",
-      "Cancion": "LUNA",
-      "Reproducciones": 3006458
-    }
-  ]
-  
+  {
+      "Nombre": "we can't be friends (wait for your love)",
+      "Reproducciones": 8808729,
+      "Puesto": 1
+  },
+  {
+      "Nombre": "Beautiful Things",
+      "Reproducciones": 8026126,
+      "Puesto": 2
+  },
+  {
+      "Nombre": "End of Beginning",
+      "Reproducciones": 7837767,
+      "Puesto": 3
+  },
+  {
+      "Nombre": "CARNIVAL",
+      "Reproducciones": 5530898,
+      "Puesto": 4
+  },
+  {
+      "Nombre": "Lose Control",
+      "Reproducciones": 4780313,
+      "Puesto": 5
+  },
+  {
+      "Nombre": "greedy",
+      "Reproducciones": 4750083,
+      "Puesto": 6
+  },
+  {
+      "Nombre": "Cruel Summer",
+      "Reproducciones": 4487905,
+      "Puesto": 7
+  },
+  {
+      "Nombre": "Gata Only",
+      "Reproducciones": 4152613,
+      "Puesto": 8
+  },
+  {
+      "Nombre": "One Of The Girls (with JENNIE, Lily Rose Depp)",
+      "Reproducciones": 3879830,
+      "Puesto": 9
+  },
+  {
+      "Nombre": "TEXAS HOLD 'EM",
+      "Reproducciones": 3768738,
+      "Puesto": 10
+  },
+  {
+      "Nombre": "My Love Mine All Mine",
+      "Reproducciones": 3624213,
+      "Puesto": 11
+  },
+  {
+      "Nombre": "Stick Season",
+      "Reproducciones": 3500139,
+      "Puesto": 12
+  },
+  {
+      "Nombre": "LUNA",
+      "Reproducciones": 3433542,
+      "Puesto": 13
+  },
+  {
+      "Nombre": "La Diabla",
+      "Reproducciones": 3321356,
+      "Puesto": 14
+  },
+  {
+      "Nombre": "yes, and?",
+      "Reproducciones": 3054112,
+      "Puesto": 15
+  },
+  {
+      "Nombre": "Saturn",
+      "Reproducciones": 3051678,
+      "Puesto": 16
+  },
+  {
+      "Nombre": "redrum",
+      "Reproducciones": 3024167,
+      "Puesto": 17
+  },
+  {
+      "Nombre": "the boy is mine",
+      "Reproducciones": 2966726,
+      "Puesto": 18
+  },
+  {
+      "Nombre": "FRI(END)S",
+      "Reproducciones": 2877790,
+      "Puesto": 19
+  },
+  {
+      "Nombre": "FE!N (feat. Playboi Carti)",
+      "Reproducciones": 2771759,
+      "Puesto": 20
+  }
+]
