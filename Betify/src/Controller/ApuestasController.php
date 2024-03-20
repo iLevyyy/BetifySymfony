@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Entity\Apuestas;
 use App\Entity\Artistas;
 use App\Entity\Canciones;
-use App\Entity\CancionesDia1; 
+use App\Entity\CancionesDia1;
 use App\Entity\CancionesDia2;
 use App\Entity\CancionesDia3;
 use App\Entity\Usuarios;
@@ -83,12 +83,12 @@ class ApuestasController extends AbstractController
         $apuesta->setCantidad($data['Cantidad']);
         $apuesta->setPrediccion($data['Prediccion']);
         $apuesta->setFechaFinal($apuesta->createFechaFinal());
-        $apuesta->setArtistasIdartista($data['IdArtista']);
-        $apuesta->setCancionesIdcancion($data['IdCancion']);
-        
+        //$apuesta->setArtistasIdartista($data['IdArtista']);
+        $cancion = $this->entityManager->getRepository(Canciones::class)->findOneBy(['nombre' => $data['Cancion']]);
+        $apuesta->setCancionesIdcancion($cancion);
+
 
         $user = $this->entityManager->getRepository(Usuarios::class)->findOneBy(['idusuario' => $data['id']]);
-
         if ($apuesta->getCantidad() > $user->getCreditos()) {
             return $this->json(['mensaje' => 'No se pueden apostar mas creditos de los disponibles', 'success' => false], Response::HTTP_BAD_REQUEST);
         }
@@ -111,25 +111,53 @@ class ApuestasController extends AbstractController
         $allSongs[2] = [$cancionesDia2];
         $allSongs[3] = [$cancionesDia3];
 
-        return($allSongs);
+        return ($allSongs);
     }
 
-    public function calcularCuota(EntityManagerInterface $entityManager){
+    public function calcularCuota(EntityManagerInterface $entityManager)
+    {
         $algoritmoController = new AlgoritmoController($entityManager); // Asegúrate de haber obtenido $entityManager de alguna manera
-        $allSongs = $algoritmoController->getSongs(); 
+        $allSongs = $algoritmoController->getSongs();
         $nombresDia0 = [];
-        for ($i=0; $i < 10 ; $i++) {  //Guarda los nombres de las 10 canciones a buscar
-           $nombre = $allSongs[0][0][$i]->getNombre();
-           array_push($nombresDia0,$nombre);
+        for ($i = 0; $i < 10; $i++) {  //Guarda los nombres de las 10 canciones a buscar
+            $nombre = $allSongs[0][0][$i]->getNombre();
+            array_push($nombresDia0, $nombre);
         }
-        for ($i=0; $i < sizeof($allSongs) ; $i++) { 
+        for ($i = 0; $i < sizeof($allSongs); $i++) {
             $allSongs[$i][0];
-
         }
-        for ($i=0; $i <10 ; $i++) { 
-            if($nombresDia0[$i]);
+        for ($i = 0; $i < 10; $i++) {
+            if ($nombresDia0[$i]);
         }
     }
 
-    public function 
+    public function checkSongPosition(EntityManagerInterface $entityManager)
+    {
+        $algoritmoController = new AlgoritmoController($entityManager); // Asegúrate de haber obtenido $entityManager de alguna manera
+        $allSongs = $algoritmoController->getSongs();
+        $nombresDia0 = [];
+        $resultados = [];
+        dd($resultados);
+        for ($i = 0; $i < 10; $i++) {  //Guarda los nombres de las 10 canciones a buscar
+            $nombre = $allSongs[0][0][$i]->getNombre();
+            array_push($nombresDia0, $nombre);
+        }
+        $nombresDia1 = []; //Guarda los nombres de las 10 canciones del día anterior
+        for ($i = 0; $i < 10; $i++) {  //Guarda los nombres de las 10 canciones a buscar
+            $nombre = $allSongs[1][0][$i]->getNombre();
+            array_push($nombresDia1, $nombre);
+        }
+        for ($i=0; $i < 10 ; $i++) { 
+            $cancionDia1 = $this->entityManager->getRepository(CancionesDia1::class)->findOneBy(['nombre' => $nombresDia1[$i]]);
+            $cancionDia0 = $this->entityManager->getRepository(Canciones::class)->findOneBy(['nombre' => $nombresDia0[$i]]);
+            if($cancionDia1->getPuesto() > $cancionDia0->getPuesto()){
+                array_push($resultados["up"],$cancionDia1);
+            }elseif ($cancionDia1->getPuesto() < $cancionDia0->getPuesto()){
+                array_push($resultados["down"],$cancionDia1);
+            }else{
+                array_push($resultados["stay"],$cancionDia1);
+            }
+        }
+        dd($resultados);
+    }
 }

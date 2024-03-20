@@ -233,9 +233,12 @@ class Apuestas
         // Obtener la fecha y hora actual
         $fechaActual = new DateTime();
 
-        // Establecer la hora a las 23:59:59
-        $fechaActual->setTime(23, 59, 59);
+        // Añadir un día
+        $fechaActual->modify('+1 day');
 
+        // Establecer la hora a las 17:10:00
+        $fechaActual->setTime(17, 10, 00);
+        dd($fechaActual);
         return $fechaActual;
     }
 }

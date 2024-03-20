@@ -43,9 +43,8 @@ apuesta_crear:
     methods: ['POST']
 
 alogirtmo_listar:
-    path: /algoritmo/listar
-    controller: App\Controller\AlgoritmoController::calcularCuota
-    methods: ['GET']
+    path: /algoritmo/test
+    controller: App\Controller\ApuestasController::checkSongPosition
 
 Json_BBDD:
     path: /insertar-datos-desde-json
