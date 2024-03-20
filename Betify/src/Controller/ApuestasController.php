@@ -81,9 +81,11 @@ class ApuestasController extends AbstractController
 
         $apuesta->setCuota($data['Cuota']);
         $apuesta->setCantidad($data['Cantidad']);
+        $apuesta->setPrediccion($data['Prediccion']);
         $apuesta->setFechaFinal($apuesta->createFechaFinal());
         $apuesta->setArtistasIdartista($data['IdArtista']);
         $apuesta->setCancionesIdcancion($data['IdCancion']);
+        
 
         $user = $this->entityManager->getRepository(Usuarios::class)->findOneBy(['idusuario' => $data['id']]);
 
@@ -128,4 +130,6 @@ class ApuestasController extends AbstractController
             if($nombresDia0[$i]);
         }
     }
+
+    public function 
 }

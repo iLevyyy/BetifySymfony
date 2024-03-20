@@ -129,6 +129,7 @@ class Apuestas
         $this->cuota = $cuota;
     }
 
+
     /**
      * Obtener el valor de cantidad
      *
@@ -147,6 +148,24 @@ class Apuestas
     public function setCantidad(float $cantidad): void
     {
         $this->cantidad = $cantidad;
+    }
+    /**
+     * Obtener el valor de prediccion
+     *
+     * @return string
+     */
+    public function getPrediccion(): string
+    {
+        return $this->cantidad;
+    }
+    /**
+     * Establecer el valor de prediccion
+     *
+     * @param string $cantidad
+     */
+    public function setPrediccion(string $prediccion): void
+    {
+        $this->prediccion = $prediccion;
     }
 
     /**
