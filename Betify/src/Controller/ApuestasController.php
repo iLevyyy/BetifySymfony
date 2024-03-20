@@ -136,8 +136,6 @@ class ApuestasController extends AbstractController
         $algoritmoController = new AlgoritmoController($entityManager); // Asegúrate de haber obtenido $entityManager de alguna manera
         $allSongs = $algoritmoController->getSongs();
         $nombresDia0 = [];
-        $resultados = [];
-        dd($resultados);
         for ($i = 0; $i < 10; $i++) {  //Guarda los nombres de las 10 canciones a buscar
             $nombre = $allSongs[0][0][$i]->getNombre();
             array_push($nombresDia0, $nombre);
@@ -147,17 +145,28 @@ class ApuestasController extends AbstractController
             $nombre = $allSongs[1][0][$i]->getNombre();
             array_push($nombresDia1, $nombre);
         }
-        for ($i=0; $i < 10 ; $i++) { 
-            $cancionDia1 = $this->entityManager->getRepository(CancionesDia1::class)->findOneBy(['nombre' => $nombresDia1[$i]]);
-            $cancionDia0 = $this->entityManager->getRepository(Canciones::class)->findOneBy(['nombre' => $nombresDia0[$i]]);
-            if($cancionDia1->getPuesto() > $cancionDia0->getPuesto()){
-                array_push($resultados["up"],$cancionDia1);
-            }elseif ($cancionDia1->getPuesto() < $cancionDia0->getPuesto()){
-                array_push($resultados["down"],$cancionDia1);
-            }else{
-                array_push($resultados["stay"],$cancionDia1);
+        $resultados = [
+            "up" => [],
+            "down" => [],
+            "stay" => []
+        ];
+
+        for ($i = 0; $i < 10; $i++) {
+            $cancionEnDia1 = $this->entityManager->getRepository(CancionesDia1::class)->findOneBy(['nombre' => $nombresDia1[$i]]);
+            $cancionEnDia0 = $this->entityManager->getRepository(Canciones::class)->findOneBy(['nombre' => $nombresDia1[$i]]);
+            if ($cancionEnDia0 != null) {
+                if ($cancionEnDia1->getPuesto() > $cancionEnDia0->getPuesto()) {
+                    array_push($resultados["up"], $cancionEnDia1);
+                } elseif ($cancionEnDia1->getPuesto() < $cancionEnDia0->getPuesto()) {
+                    array_push($resultados["down"], $cancionEnDia1);
+                } else {
+                    array_push($resultados["stay"], $cancionEnDia1);
+                }
+            } else {
+                array_push($resultados["down"], $cancionEnDia1);
             }
         }
+
         dd($resultados);
     }
 }
