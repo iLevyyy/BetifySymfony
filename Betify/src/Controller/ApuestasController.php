@@ -88,7 +88,7 @@ class ApuestasController extends AbstractController
         $apuesta->setCancionesIdcancion($cancion);
 
 
-        $user = $this->entityManager->getRepository(Usuarios::class)->findOneBy(['idusuario' => $data['id']]);
+        $user = $this->entityManager->getRepository(Usuarios::class)->findOneBy(['idusuario' => $data['token']]);
         if ($apuesta->getCantidad() > $user->getCreditos()) {
             return $this->json(['mensaje' => 'No se pueden apostar mas creditos de los disponibles', 'success' => false], Response::HTTP_BAD_REQUEST);
         }
@@ -166,7 +166,5 @@ class ApuestasController extends AbstractController
                 array_push($resultados["down"], $cancionEnDia1);
             }
         }
-
-        dd($resultados);
     }
 }
