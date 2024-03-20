@@ -167,4 +167,7 @@ class ApuestasController extends AbstractController
             }
         }
     }
+    public function actualizarCreditos(EntityManagerInterface $entityManager){
+
+    }
 }
