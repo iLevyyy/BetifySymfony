@@ -1,101 +1,122 @@
 [
     {
-        "Nombre": "we can't be friends (wait for your love)",
-        "Reproducciones": 8764794,
-        "Puesto": 1
+    "Cancion": "we can't be friends (wait for your love)",
+    "Reproducciones": 8764794,
+    "Rango": 1,
+    "Artista": "Ariana Grande"
     },
     {
-        "Nombre": "Beautiful Things",
-        "Reproducciones": 7771487,
-        "Puesto": 2
+    "Cancion": "Beautiful Things",
+    "Reproducciones": 7771487,
+    "Rango": 2,
+    "Artista": "Benson Boone"
     },
     {
-        "Nombre": "End of Beginning",
-        "Reproducciones": 7758582,
-        "Puesto": 3
+    "Cancion": "End of Beginning",
+    "Reproducciones": 7758582,
+    "Rango": 3,
+    "Artista": "Djo"
     },
     {
-        "Nombre": "CARNIVAL",
-        "Reproducciones": 5612593,
-        "Puesto": 4
+    "Cancion": "CARNIVAL",
+    "Reproducciones": 5612593,
+    "Rango": 4,
+    "Artista": "¥$, Kanye West, Ty Dolla $ign, Rich The Kid, Playboi Carti"
     },
     {
-        "Nombre": "greedy",
-        "Reproducciones": 4638101,
-        "Puesto": 5
+    "Cancion": "greedy",
+    "Reproducciones": 4638101,
+    "Rango": 5,
+    "Artista": "Tate McRae"
     },
     {
-        "Nombre": "Lose Control",
-        "Reproducciones": 4607259,
-        "Puesto": 6
+    "Cancion": "Lose Control",
+    "Reproducciones": 4607259,
+    "Rango": 6,
+    "Artista": "Teddy Swims"
     },
     {
-        "Nombre": "Cruel Summer",
-        "Reproducciones": 4355386,
-        "Puesto": 7
+    "Cancion": "Cruel Summer",
+    "Reproducciones": 4355386,
+    "Rango": 7,
+    "Artista": "Taylor Swift"
     },
     {
-        "Nombre": "Gata Only",
-        "Reproducciones": 4079221,
-        "Puesto": 8
+    "Cancion": "Gata Only",
+    "Reproducciones": 4079221,
+    "Rango": 8,
+    "Artista": "FloyyMenor, Cris Mj"
     },
     {
-        "Nombre": "One Of The Girls (with JENNIE, Lily Rose Depp)",
-        "Reproducciones": 3856558,
-        "Puesto": 9
+    "Cancion": "One Of The Girls (with JENNIE, Lily Rose Depp)",
+    "Reproducciones": 3856558,
+    "Rango": 9,
+    "Artista": "The Weeknd, JENNIE, Lily-Rose Depp"
     },
     {
-        "Nombre": "My Love Mine All Mine",
-        "Reproducciones": 3709064,
-        "Puesto": 10
+    "Cancion": "My Love Mine All Mine",
+    "Reproducciones": 3709064,
+    "Rango": 10,
+    "Artista": "Mitski"
     },
     {
-        "Nombre": "TEXAS HOLD 'EM",
-        "Reproducciones": 3615351,
-        "Puesto": 11
+    "Cancion": "TEXAS HOLD 'EM",
+    "Reproducciones": 3615351,
+    "Rango": 11,
+    "Artista": "Beyoncé"
     },
     {
-        "Nombre": "Stick Season",
-        "Reproducciones": 3463636,
-        "Puesto": 12
+    "Cancion": "Stick Season",
+    "Reproducciones": 3463636,
+    "Rango": 12,
+    "Artista": "Noah Kahan"
     },
     {
-        "Nombre": "La Diabla",
-        "Reproducciones": 3331535,
-        "Puesto": 13
+    "Cancion": "La Diabla",
+    "Reproducciones": 3331535,
+    "Rango": 13,
+    "Artista": "Xavi"
     },
     {
-        "Nombre": "LUNA",
-        "Reproducciones": 3229926,
-        "Puesto": 14
+    "Cancion": "LUNA",
+    "Reproducciones": 3229926,
+    "Rango": 14,
+    "Artista": "Feid, ATL Jacob"
     },
     {
-        "Nombre": "yes, and?",
-        "Reproducciones": 3112507,
-        "Puesto": 15
+    "Cancion": "yes, and?",
+    "Reproducciones": 3112507,
+    "Rango": 15,
+    "Artista": "Ariana Grande"
     },
     {
-        "Nombre": "the boy is mine",
-        "Reproducciones": 3041150,
-        "Puesto": 16
+    "Cancion": "the boy is mine",
+    "Reproducciones": 3041150,
+    "Rango": 16,
+    "Artista": "Ariana Grande"
     },
     {
-        "Nombre": "Saturn",
-        "Reproducciones": 3025751,
-        "Puesto": 17
+    "Cancion": "Saturn",
+    "Reproducciones": 3025751,
+    "Rango": 17,
+    "Artista": "SZA"
     },
     {
-        "Nombre": "FRI(END)S",
-        "Reproducciones": 3014125,
-        "Puesto": 18
+    "Cancion": "FRI(END)S",
+    "Reproducciones": 3014125,
+    "Rango": 18,
+    "Artista": "V"
     },
     {
-        "Nombre": "redrum",
-        "Reproducciones": 3005901,
-        "Puesto": 19
+    "Cancion": "redrum",
+    "Reproducciones": 3005901,
+    "Rango": 19,
+    "Artista": "21 Savage"
     },
     {
-        "Nombre": "FE!N (feat. Playboi Carti)",
-        "Reproducciones": 2810060,
-        "Puesto": 20
+    "Cancion": "FE!N (feat. Playboi Carti)",
+    "Reproducciones": 2810060,
+    "Rango": 20,
+    "Artista": "Travis Scott, Playboi Carti"
     }
+    ]
