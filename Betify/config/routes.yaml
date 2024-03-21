@@ -2,7 +2,7 @@ controllers:
     resource: ../src/Controller/
     type: attribute
 
-usuarios_listar:
+usuario_login:
     path: /usuarios/login   
     controller: App\Controller\UsuariosController::loginUsuarios
 
@@ -45,7 +45,7 @@ apuesta_crear:
 comprobar_apuestas:
     path: /apuestas/check
     controller: App\Controller\ApuestasController::actualizarCreditos
-    
+
 alogirtmo_listar:
     path: /algoritmo/test
     controller: App\Controller\ApuestasController::checkSongPosition
