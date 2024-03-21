@@ -35,7 +35,7 @@ class UsuariosController extends AbstractController
 
         if ($usuario != null) {
             $id = $usuario->getIdUsuario();
-            return $this->json(['boolean' => true, 'token' => $id, 'creditos' => $usuario->getCreditos()], Response::HTTP_OK);
+            return $this->json(['boolean' => true, 'token' => $id, 'creditos' => $usuario->getCreditos(),], Response::HTTP_OK);
         } else {
             return $this->json(['boolean' => false], Response::HTTP_OK);
         }
