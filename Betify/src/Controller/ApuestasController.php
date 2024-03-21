@@ -158,8 +158,8 @@ class ApuestasController extends AbstractController
         $resultados = $this->checkSongPosition($entityManager); // Suponiendo que checkSongPosition devuelve $resultados correctamente
         foreach ($resultados as $tipo => $canciones) {
             foreach ($canciones as $cancion) {
-                $apuesta = $apuestasRepository->find($apuesta['idApuesta']);
-                
+                dd($cancion);
+                $i
                 if ($apuesta) {
                     $usuario = $apuesta->getUsuario();
                     $cuota = $apuesta->getCuota();
