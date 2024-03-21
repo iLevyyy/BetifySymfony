@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\Usuarios;
 use DateTime;
 
 /**
@@ -71,24 +72,35 @@ class Apuestas
      * })
      */
     private $cancionesIdcancion;
+
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var \Usuarios
      *
-     * @ORM\ManyToMany(targetEntity="Usuarios", inversedBy="apuestasIdapuesta")
-     * @ORM\JoinTable(name="usuarios_has_apuestas",
-     *   joinColumns={
-     *     @ORM\JoinColumn(name="Apuestas_idApuesta", referencedColumnName="idApuesta")
-     *   },
-     *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="Usuarios_idUsuario", referencedColumnName="idUsuario")
-     *   }
-     * )
+     * @ORM\ManyToOne(targetEntity="Usuarios", inversedBy="apuestas")
+     * @ORM\JoinColumn(name="Usuarios_idUsuario", referencedColumnName="idUsuario")
      */
-    private $usuarios;
-    public function __construct()
+    private $usuario;
+
+    /**
+     * Obtener el usuario asociado a esta apuesta.
+     *
+     * @return \Usuarios
+     */
+    public function getUsuario(): ?Usuarios
     {
-        $this->usuarios = new ArrayCollection();
+        return $this->usuario;
     }
+
+    /**
+     * Establecer el usuario asociado a esta apuesta.
+     *
+     * @param \Usuarios|null $usuario
+     */
+    public function setUsuario(?Usuarios $usuario): void
+    {
+        $this->usuario = $usuario;
+    }
+
     /**
      * Obtener el valor de idapuesta
      *

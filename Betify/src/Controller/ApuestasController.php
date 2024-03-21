@@ -83,20 +83,29 @@ class ApuestasController extends AbstractController
         $apuesta->setCantidad($data['Cantidad']);
         $apuesta->setPrediccion($data['Prediccion']);
         $apuesta->setFechaFinal($apuesta->createFechaFinal());
-        //$apuesta->setArtistasIdartista($data['IdArtista']);
+
+        // Obtener la canción
         $cancion = $this->entityManager->getRepository(Canciones::class)->findOneBy(['nombre' => $data['Cancion']]);
         $apuesta->setCancionesIdcancion($cancion);
 
+        // Obtener el usuario
+        $usuario = $this->entityManager->getRepository(Usuarios::class)->findOneBy(['idusuario' => $data['token']]);
 
-        $user = $this->entityManager->getRepository(Usuarios::class)->findOneBy(['idusuario' => $data['token']]);
-        if ($apuesta->getCantidad() > $user->getCreditos()) {
-            return $this->json(['mensaje' => 'No se pueden apostar mas creditos de los disponibles', 'success' => false], Response::HTTP_BAD_REQUEST);
+        // Verificar créditos
+        if ($apuesta->getCantidad() > $usuario->getCreditos()) {
+            return $this->json(['mensaje' => 'No se pueden apostar más créditos de los disponibles', 'success' => false], Response::HTTP_BAD_REQUEST);
         }
 
+        // Relacionar apuesta con usuario
+        $usuario->addApuesta($apuesta);
+
         $this->entityManager->persist($apuesta);
+        $this->entityManager->persist($usuario); // Persistir también el usuario para actualizar la relación
         $this->entityManager->flush();
+
         return $this->json(['mensaje' => 'Apuesta creada correctamente', 'success' => true], Response::HTTP_OK);
     }
+
 
     public function getSongs()
     {
@@ -166,8 +175,37 @@ class ApuestasController extends AbstractController
                 array_push($resultados["down"], $cancionEnDia1);
             }
         }
+        return $resultados;
     }
-    public function actualizarCreditos(EntityManagerInterface $entityManager){
-
+    public function actualizarCreditos(EntityManagerInterface $entityManager)
+    {
+        $apuestasRepository = $entityManager->getRepository(Apuestas::class);
+        $resultados = $this->checkSongPosition($entityManager); // Suponiendo que checkSongPosition devuelve $resultados correctamente
+        foreach ($resultados as $tipo => $canciones) {
+            foreach ($canciones as $cancion) {
+                $apuesta = $apuestasRepository->find($cancion['idApuesta']);
+                
+                if ($apuesta) {
+                    $usuario = $apuesta->getUsuario();
+                    $cuota = $apuesta->getCuota();
+                    $cantidad = $apuesta->getCantidad();
+                    $prediccion = $apuesta->getPrediccion();
+                    $resultado = $tipo; // Usamos directamente el tipo de resultado del array $resultados
+                    
+                    if ($resultado === $prediccion) {
+                        // El usuario acertó, actualiza sus créditos
+                        $creditosActuales = $usuario->getCreditos();
+                        $nuevosCreditos = $creditosActuales + ($cuota * $cantidad);
+                        $usuario->setCreditos($nuevosCreditos);
+                        
+                        // Elimina la apuesta
+                        $entityManager->remove($apuesta);
+                    }
+                }
+            }
+        }
+        
+        // Guarda los cambios en la base de datos
+        $entityManager->flush();
     }
 }

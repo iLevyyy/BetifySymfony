@@ -57,24 +57,44 @@ class Usuarios
      * @ORM\Column(name="isAdmin", type="boolean", length=45, nullable=true)
      */
     private $isadmin = '0';
+
+
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Apuestas", inversedBy="usuariosIdusuario")
-     * @ORM\JoinTable(name="usuarios_has_apuestas",
-     *   joinColumns={
-     *     @ORM\JoinColumn(name="Usuarios_idUsuario", referencedColumnName="idUsuario")
-     *   },
-     *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="Apuestas_idApuesta", referencedColumnName="idApuesta")
-     *   }
-     * )
+     * @ORM\OneToMany(targetEntity="Apuestas", mappedBy="usuario")
      */
     private $apuestas;
 
+    public function __construct()
+    {
+        $this->apuestas = new ArrayCollection();
+    }
+
+    /**
+     * Obtener todas las apuestas de este usuario.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getApuestas(): \Doctrine\Common\Collections\Collection
+    {
+        return $this->apuestas;
+    }
+
     public function addApuesta(Apuestas $apuesta): void
     {
-        $this->apuestas[] = $apuesta;
+        if (!$this->apuestas->contains($apuesta)) {
+            $this->apuestas[] = $apuesta;
+            $apuesta->setUsuario($this); // Establece este usuario en la apuesta
+        }
+    }
+
+    public function removeApuesta(Apuestas $apuesta): void
+    {
+        if ($this->apuestas->contains($apuesta)) {
+            $this->apuestas->removeElement($apuesta);
+            $apuesta->setUsuario(null); // Quita la referencia de este usuario en la apuesta
+        }
     }
     /**
      * Obtener el valor de idusuario
@@ -153,6 +173,8 @@ class Usuarios
     {
         $this->password = $password;
     }
+
+
 
     // /**
     //  * Obtener la colección de apuestasIdapuesta

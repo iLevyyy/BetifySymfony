@@ -39,7 +39,7 @@ apuesta_listar:
 
 apuesta_crear:
     path: /apuestas/crear
-    controller: App\Controller\ApuestasController::crearApuesta
+    controller: App\Controller\ApuestasController::actualizarCreditos
     methods: ['POST']
 
 alogirtmo_listar:
