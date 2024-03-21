@@ -39,9 +39,13 @@ apuesta_listar:
 
 apuesta_crear:
     path: /apuestas/crear
-    controller: App\Controller\ApuestasController::actualizarCreditos
+    controller: App\Controller\ApuestasController::crearApuesta
     methods: ['POST']
 
+comprobar_apuestas:
+    path: /apuestas/check
+    controller: App\Controller\ApuestasController::actualizarCreditos
+    
 alogirtmo_listar:
     path: /algoritmo/test
     controller: App\Controller\ApuestasController::checkSongPosition

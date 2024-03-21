@@ -154,32 +154,24 @@ class ApuestasController extends AbstractController
     public function actualizarCreditos(EntityManagerInterface $entityManager)
     {
         $apuestasRepository = $entityManager->getRepository(Apuestas::class);
-        dd($apuestasRepository);
+        $apuestas = $apuestasRepository->findAll();
+
         $resultados = $this->checkSongPosition($entityManager); // Suponiendo que checkSongPosition devuelve $resultados correctamente
-        foreach ($resultados as $tipo => $canciones) {
-            foreach ($canciones as $cancion) {
-                dd($cancion);
-                $i
-                if ($apuesta) {
-                    $usuario = $apuesta->getUsuario();
-                    $cuota = $apuesta->getCuota();
-                    $cantidad = $apuesta->getCantidad();
-                    $prediccion = $apuesta->getPrediccion();
-                    $resultado = $tipo; // Usamos directamente el tipo de resultado del array $resultados
-                    
-                    if ($resultado === $prediccion) {
-                        // El usuario acertó, actualiza sus créditos
-                        $creditosActuales = $usuario->getCreditos();
-                        $nuevosCreditos = $creditosActuales + ($cuota * $cantidad);
-                        $usuario->setCreditos($nuevosCreditos);
-                        
-                        // Elimina la apuesta
-                        $entityManager->remove($apuesta);
-                    }
+        foreach ($apuestas as $apuesta) {
+            $cancion = $apuesta->getcancionesIdcancion();
+            $accion = null;
+            foreach ($resultados as $move => $nombresCanciones) {
+                if (in_array($cancion->getNombre(), $nombresCanciones)) {
+                    $accion = $move;
+                    break;
                 }
             }
+            if ($apuesta->getPrediccion() == $accion) {
+                $usuario = $apuesta->getUsuario();
+                $usuario->setCreditos($usuario->getCreditos() + $apuesta->getCantidad() * $apuesta->getCuota());
+            }
+            $entityManager->remove($apuesta);
         }
-        
         // Guarda los cambios en la base de datos
         $entityManager->flush();
     }
