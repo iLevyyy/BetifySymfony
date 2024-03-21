@@ -46,33 +46,6 @@ class ApuestasController extends AbstractController
         return new JsonResponse($ApuestasArray);
     }
 
-    public function crearApuestas(Request $request, EntityManagerInterface $entityManager): JsonResponse
-    {
-        // Deserializar datos de la apuesta recibidos de Postman
-        $datosApuesta = json_decode($request->getContent(), true);
-
-        // Crear una instancia de la entidad Apuesta
-        $apuesta = new Apuestas();
-        $apuesta->setCuota($datosApuesta['cuota']);
-        $apuesta->setCantidad($datosApuesta['cantidad']);
-        $apuesta->setFechaFinal(new \DateTime());
-
-        // Persistir la apuesta en la base de datos
-        $entityManager->persist($apuesta);
-        $entityManager->flush();
-
-        // Obtener el usuario al que deseas asociar la apuesta (suponiendo que obtienes el usuario de la sesión)
-        $usuario = $entityManager->getRepository(Usuarios::class)->find();
-
-        // Asociar la apuesta al usuario
-        $usuario->addApuesta($apuesta);
-
-        // Persistir los cambios en el usuario
-        $entityManager->persist($usuario);
-        $entityManager->flush();
-
-        return new JsonResponse(['mensaje' => 'Apuesta creada y asociada al usuario exitosamente']);
-    }
     public function crearApuesta(Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
@@ -95,6 +68,7 @@ class ApuestasController extends AbstractController
         if ($apuesta->getCantidad() > $usuario->getCreditos()) {
             return $this->json(['mensaje' => 'No se pueden apostar más créditos de los disponibles', 'success' => false], Response::HTTP_BAD_REQUEST);
         }
+        $usuario->setCreditos($usuario->getCreditos() - $apuesta->getCantidad());
 
         // Relacionar apuesta con usuario
         $usuario->addApuesta($apuesta);
@@ -183,7 +157,7 @@ class ApuestasController extends AbstractController
         $resultados = $this->checkSongPosition($entityManager); // Suponiendo que checkSongPosition devuelve $resultados correctamente
         foreach ($resultados as $tipo => $canciones) {
             foreach ($canciones as $cancion) {
-                $apuesta = $apuestasRepository->find($cancion['idApuesta']);
+                $apuesta = $apuestasRepository->find($apuesta['idApuesta']);
                 
                 if ($apuesta) {
                     $usuario = $apuesta->getUsuario();
