@@ -35,9 +35,9 @@ class UsuariosController extends AbstractController
 
         if ($usuario != null) {
             $id = $usuario->getIdUsuario();
-            return $this->json(['boolean'=> true,'token'=>$id, 'creditos' => $usuario->getCreditos(),], Response::HTTP_OK);
+            return $this->json(['boolean' => true, 'token' => $id, 'creditos' => $usuario->getCreditos(),], Response::HTTP_OK);
         } else {
-            return $this->json(['boolean'=> false], Response::HTTP_OK);
+            return $this->json(['boolean' => false], Response::HTTP_OK);
         }
     }
 
@@ -52,15 +52,15 @@ class UsuariosController extends AbstractController
         $usuario->setEmail($data['Email']);
 
         if ($this->entityManager->getRepository(Usuarios::class)->findOneBy(['email' => $usuario->getEmail()])) {
-            return $this->json(['Error al regitrar' => 'El correo electronico ya existe', 'boolean'=> false], Response::HTTP_OK);
+            return $this->json(['Error al regitrar' => 'El correo electronico ya existe', 'boolean' => false], Response::HTTP_OK);
         }
         if ($this->entityManager->getRepository(Usuarios::class)->findOneBy(['nombreusuario' => $usuario->getNombreUsuario()])) {
-            return $this->json(['Error al regitrar' => 'El nombre de usuario ya existe', 'boolean'=> false], Response::HTTP_OK);
+            return $this->json(['Error al regitrar' => 'El nombre de usuario ya existe', 'boolean' => false], Response::HTTP_OK);
         }
         $this->entityManager->persist($usuario);
         $this->entityManager->flush();
 
-        return $this->json(['mensaje' => 'Usuario creado correctamente', 'boolean'=> true], Response::HTTP_OK);
+        return $this->json(['mensaje' => 'Usuario creado correctamente', 'boolean' => true], Response::HTTP_OK);
     }
 
 

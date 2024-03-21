@@ -166,5 +166,30 @@ class ApuestasController extends AbstractController
                 array_push($resultados["down"], $cancionEnDia1);
             }
         }
+        return $resultados;
+    }
+    public function actualizarCreditos(EntityManagerInterface $entityManager)
+    {
+        $apuestasRepository = $entityManager->getRepository(Apuestas::class);
+        $apuestas = $apuestasRepository->findAll();
+
+        $resultados = $this->checkSongPosition($entityManager); // Suponiendo que checkSongPosition devuelve $resultados correctamente
+        foreach ($apuestas as $apuesta) {
+            $cancion = $apuesta->getcancionesIdcancion();
+            $accion = null;
+            foreach ($resultados as $move => $nombresCanciones) {
+                if (in_array($cancion->getNombre(), $nombresCanciones)) {
+                    $accion = $move;
+                    break;
+                }
+            }
+            if ($apuesta->getPrediccion() == $accion) {
+                $usuario = $apuesta->getUsuario();
+                $usuario->setCreditos($usuario->getCreditos() + $apuesta->getCantidad() * $apuesta->getCuota());
+            }
+            $entityManager->remove($apuesta);
+        }
+        // Guarda los cambios en la base de datos
+        $entityManager->flush();
     }
 }
