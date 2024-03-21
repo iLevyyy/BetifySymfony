@@ -49,26 +49,37 @@ class ApuestasController extends AbstractController
     public function crearApuesta(Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
+
         $apuesta = new Apuestas();
 
         $apuesta->setCuota($data['Cuota']);
         $apuesta->setCantidad($data['Cantidad']);
         $apuesta->setPrediccion($data['Prediccion']);
         $apuesta->setFechaFinal($apuesta->createFechaFinal());
-        //$apuesta->setArtistasIdartista($data['IdArtista']);
+
+        // Obtener la canción
         $cancion = $this->entityManager->getRepository(Canciones::class)->findOneBy(['nombre' => $data['Cancion']]);
         $apuesta->setCancionesIdcancion($cancion);
 
+        // Obtener el usuario
+        $usuario = $this->entityManager->getRepository(Usuarios::class)->findOneBy(['idusuario' => $data['token']]);
 
-        $user = $this->entityManager->getRepository(Usuarios::class)->findOneBy(['idusuario' => $data['token']]);
-        if ($apuesta->getCantidad() > $user->getCreditos()) {
-            return $this->json(['mensaje' => 'No se pueden apostar mas creditos de los disponibles', 'success' => false,'creditos' => $user->getCreditos(),], Response::HTTP_OK);
+        // Verificar créditos
+        if ($apuesta->getCantidad() > $usuario->getCreditos()) {
+            return $this->json(['mensaje' => 'No se pueden apostar más créditos de los disponibles', 'success' => false, 'creditos' => $usuario->getCreditos(),], Response::HTTP_OK);
         }
+        $usuario->setCreditos($usuario->getCreditos() - $apuesta->getCantidad());
+
+        // Relacionar apuesta con usuario
+        $usuario->addApuesta($apuesta);
 
         $this->entityManager->persist($apuesta);
+        $this->entityManager->persist($usuario); // Persistir también el usuario para actualizar la relación
         $this->entityManager->flush();
-        return $this->json(['mensaje' => 'Apuesta creada correctamente', 'success' => true,'creditos' => $user->getCreditos(),], Response::HTTP_OK);
+
+        return $this->json(['mensaje' => 'Apuesta creada correctamente', 'success' => true, 'creditos' => $usuario->getCreditos()], Response::HTTP_OK);
     }
+
 
     public function getSongs()
     {
@@ -163,5 +174,6 @@ class ApuestasController extends AbstractController
         }
         // Guarda los cambios en la base de datos
         $entityManager->flush();
+        return new Response('Apuestas comprobadas correctamente');
     }
 }
