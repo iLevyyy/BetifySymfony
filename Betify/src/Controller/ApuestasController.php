@@ -46,37 +46,9 @@ class ApuestasController extends AbstractController
         return new JsonResponse($ApuestasArray);
     }
 
-    public function crearApuestas(Request $request, EntityManagerInterface $entityManager): JsonResponse
-    {
-        // Deserializar datos de la apuesta recibidos de Postman
-        $datosApuesta = json_decode($request->getContent(), true);
-
-        // Crear una instancia de la entidad Apuesta
-        $apuesta = new Apuestas();
-        $apuesta->setCuota($datosApuesta['cuota']);
-        $apuesta->setCantidad($datosApuesta['cantidad']);
-        $apuesta->setFechaFinal(new \DateTime());
-
-        // Persistir la apuesta en la base de datos
-        $entityManager->persist($apuesta);
-        $entityManager->flush();
-
-        // Obtener el usuario al que deseas asociar la apuesta (suponiendo que obtienes el usuario de la sesión)
-        $usuario = $entityManager->getRepository(Usuarios::class)->find();
-
-        // Asociar la apuesta al usuario
-        $usuario->addApuesta($apuesta);
-
-        // Persistir los cambios en el usuario
-        $entityManager->persist($usuario);
-        $entityManager->flush();
-
-        return new JsonResponse(['mensaje' => 'Apuesta creada y asociada al usuario exitosamente']);
-    }
     public function crearApuesta(Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
-        dd($request);
         $apuesta = new Apuestas();
 
         $apuesta->setCuota($data['Cuota']);
@@ -90,12 +62,12 @@ class ApuestasController extends AbstractController
 
         $user = $this->entityManager->getRepository(Usuarios::class)->findOneBy(['idusuario' => $data['token']]);
         if ($apuesta->getCantidad() > $user->getCreditos()) {
-            return $this->json(['mensaje' => 'No se pueden apostar mas creditos de los disponibles', 'success' => false], Response::HTTP_BAD_REQUEST);
+            return $this->json(['mensaje' => 'No se pueden apostar mas creditos de los disponibles', 'success' => false,'creditos' => $user->getCreditos(),], Response::HTTP_OK);
         }
 
         $this->entityManager->persist($apuesta);
         $this->entityManager->flush();
-        return $this->json(['mensaje' => 'Apuesta creada correctamente', 'success' => true], Response::HTTP_OK);
+        return $this->json(['mensaje' => 'Apuesta creada correctamente', 'success' => true,'creditos' => $user->getCreditos(),], Response::HTTP_OK);
     }
 
     public function getSongs()
