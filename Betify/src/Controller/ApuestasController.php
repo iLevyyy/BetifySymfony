@@ -66,7 +66,7 @@ class ApuestasController extends AbstractController
 
         // Verificar créditos
         if ($apuesta->getCantidad() > $usuario->getCreditos()) {
-            return $this->json(['mensaje' => 'No se pueden apostar más créditos de los disponibles', 'success' => false], Response::HTTP_BAD_REQUEST);
+            return $this->json(['mensaje' => 'No se pueden apostar más créditos de los disponibles', 'success' => false, 'creditos' => $usuario->getCreditos()], Response::HTTP_OK);
         }
         $usuario->setCreditos($usuario->getCreditos() - $apuesta->getCantidad());
 
@@ -77,7 +77,7 @@ class ApuestasController extends AbstractController
         $this->entityManager->persist($usuario); // Persistir también el usuario para actualizar la relación
         $this->entityManager->flush();
 
-        return $this->json(['mensaje' => 'Apuesta creada correctamente', 'success' => true], Response::HTTP_OK);
+        return $this->json(['mensaje' => 'Apuesta creada correctamente', 'success' => true, 'creditos' => $usuario->getCreditos()], Response::HTTP_OK);
     }
 
 
@@ -154,6 +154,7 @@ class ApuestasController extends AbstractController
     public function actualizarCreditos(EntityManagerInterface $entityManager)
     {
         $apuestasRepository = $entityManager->getRepository(Apuestas::class);
+        dd($apuestasRepository);
         $resultados = $this->checkSongPosition($entityManager); // Suponiendo que checkSongPosition devuelve $resultados correctamente
         foreach ($resultados as $tipo => $canciones) {
             foreach ($canciones as $cancion) {
