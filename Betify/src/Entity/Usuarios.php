@@ -66,6 +66,8 @@ class Usuarios
      */
     private $apuestas;
 
+    
+
     public function __construct()
     {
         $this->apuestas = new ArrayCollection();

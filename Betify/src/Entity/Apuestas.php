@@ -45,6 +45,13 @@ class Apuestas
      */
     private $prediccion = 'NULL';
 
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="Tipo", type="string", length=45, nullable=true, options={"default"="NULL"})
+     */
+    private $tipo = 'NULL';
+
 
     /**
      * @var \DateTime
@@ -109,6 +116,14 @@ class Apuestas
     public function getIdApuesta(): int
     {
         return $this->idapuesta;
+    }
+    public function getTipo(): string|null
+    {
+        return $this->tipo;
+    }
+    public function setTipo(string $tipo): void
+    {
+        $this->tipo = $tipo;
     }
 
     /**

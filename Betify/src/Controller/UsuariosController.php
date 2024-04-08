@@ -4,6 +4,7 @@ namespace App\Controller;
 
 
 use App\Entity\Usuarios;
+use App\Entity\Amistades;
 use Doctrine\DBAL\Types\IntegerType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -93,5 +94,27 @@ class UsuariosController extends AbstractController
     public function borrarUsuario(Request $request, ManagerRegistry $managerRegistry): JsonResponse
     {
         return $this->render('usuarios/borrar.html.twig');
+    }
+
+    public function crearAmistad(Request $request)
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $usuario1 = $this->entityManager->getRepository(Usuarios::class)->findOneBy(['idusuario' => $data['idUsuario1']]);
+        $usuario2 = $this->entityManager->getRepository(Usuarios::class)->findOneBy(['idusuario' => $data['idUsuario2']]);
+
+        if(!$usuario1 || !$usuario2){
+            return $this->json(['mensaje' => 'Ha habido un error a la hora de crear la amistad', 'success' => false], Response::HTTP_OK);
+        }
+        // Crear una nueva instancia de la entidad Amistad
+        $nuevaAmistad = new Amistades($usuario1, $usuario2);
+
+        // Agregar la nueva amistad al EntityManager
+        $this->entityManager->persist($nuevaAmistad);
+
+        // Aplicar los cambios a la base de datos
+        $this->entityManager->flush();
+
+        return $this->json(['mensaje' => 'Amistad creada correctamente entre '.$usuario1->getNombreUsuario().' y '.$usuario2->getNombreUsuario(), 'success' => true], Response::HTTP_OK);
     }
 }

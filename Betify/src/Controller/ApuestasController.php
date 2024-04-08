@@ -8,6 +8,7 @@ use App\Entity\Canciones;
 use App\Entity\CancionesDia1;
 use App\Entity\CancionesDia2;
 use App\Entity\CancionesDia3;
+use App\Entity\CancionesWeek;
 use App\Entity\Usuarios;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -56,6 +57,7 @@ class ApuestasController extends AbstractController
         $apuesta->setCantidad($data['Cantidad']);
         $apuesta->setPrediccion($data['Prediccion']);
         $apuesta->setFechaFinal($apuesta->createFechaFinal());
+        $apuesta->setTipo($data['Tipo']);
 
         // Obtener la canción
         $cancion = $this->entityManager->getRepository(Canciones::class)->findOneBy(['nombre' => $data['Cancion']]);
@@ -151,6 +153,43 @@ class ApuestasController extends AbstractController
         }
         return $resultados;
     }
+    public function checkWeeklySongPosition(EntityManagerInterface $entityManager)
+    {
+        $algoritmoController = new AlgoritmoController($entityManager); // Asegúrate de haber obtenido $entityManager de alguna manera
+        $allSongs = $algoritmoController->getSongs();
+        $nombresDia0 = [];
+        for ($i = 0; $i < 10; $i++) {  //Guarda los nombres de las 10 canciones a buscar
+            $nombre = $allSongs[0][0][$i]->getNombre();
+            array_push($nombresDia0, $nombre);
+        }
+        $nombresDia1 = []; //Guarda los nombres de las 10 canciones del día anterior
+        for ($i = 0; $i < 10; $i++) {  //Guarda los nombres de las 10 canciones a buscar
+            $nombre = $allSongs[1][0][$i]->getNombre();
+            array_push($nombresDia1, $nombre);
+        }
+        $resultados = [
+            "up" => [],
+            "down" => [],
+            "stay" => []
+        ];
+
+        for ($i = 0; $i < 10; $i++) {
+            $cancionEnDia1 = $this->entityManager->getRepository(CancionesWeek::class)->findOneBy(['nombre' => $nombresDia1[$i]]);
+            $cancionEnDia0 = $this->entityManager->getRepository(Canciones::class)->findOneBy(['nombre' => $nombresDia1[$i]]);
+            if ($cancionEnDia0 != null) {
+                if ($cancionEnDia1->getPuesto() > $cancionEnDia0->getPuesto()) {
+                    array_push($resultados["up"], $cancionEnDia1);
+                } elseif ($cancionEnDia1->getPuesto() < $cancionEnDia0->getPuesto()) {
+                    array_push($resultados["down"], $cancionEnDia1);
+                } else {
+                    array_push($resultados["stay"], $cancionEnDia1);
+                }
+            } else {
+                array_push($resultados["down"], $cancionEnDia1);
+            }
+        }
+        return $resultados;
+    }
     public function actualizarCreditos(EntityManagerInterface $entityManager)
     {
         $apuestasRepository = $entityManager->getRepository(Apuestas::class);
@@ -158,19 +197,52 @@ class ApuestasController extends AbstractController
 
         $resultados = $this->checkSongPosition($entityManager); // Suponiendo que checkSongPosition devuelve $resultados correctamente
         foreach ($apuestas as $apuesta) {
-            $cancion = $apuesta->getcancionesIdcancion();
-            $accion = null;
-            foreach ($resultados as $move => $nombresCanciones) {
-                if (in_array($cancion->getNombre(), $nombresCanciones)) {
-                    $accion = $move;
-                    break;
+            if ($apuesta->getTipo() == 'daily') {
+
+
+                $cancion = $apuesta->getcancionesIdcancion();
+                $accion = null;
+                foreach ($resultados as $move => $nombresCanciones) {
+                    if (in_array($cancion->getNombre(), $nombresCanciones)) {
+                        $accion = $move;
+                        break;
+                    }
                 }
+                if ($apuesta->getPrediccion() == $accion) {
+                    $usuario = $apuesta->getUsuario();
+                    $usuario->setCreditos($usuario->getCreditos() + $apuesta->getCantidad() * $apuesta->getCuota());
+                }
+                $entityManager->remove($apuesta);
             }
-            if ($apuesta->getPrediccion() == $accion) {
-                $usuario = $apuesta->getUsuario();
-                $usuario->setCreditos($usuario->getCreditos() + $apuesta->getCantidad() * $apuesta->getCuota());
+        }
+        // Guarda los cambios en la base de datos
+        $entityManager->flush();
+        return new Response('Apuestas comprobadas correctamente');
+    }
+    public function actualizarCreditosWeekly(EntityManagerInterface $entityManager)
+    {
+        $apuestasRepository = $entityManager->getRepository(Apuestas::class);
+        $apuestas = $apuestasRepository->findAll();
+
+        $resultados = $this->checkWeeklySongPosition($entityManager); // Suponiendo que checkSongPosition devuelve $resultados correctamente
+        foreach ($apuestas as $apuesta) {
+            if ($apuesta->getTipo() == 'weekly') {
+
+
+                $cancion = $apuesta->getcancionesIdcancion();
+                $accion = null;
+                foreach ($resultados as $move => $nombresCanciones) {
+                    if (in_array($cancion->getNombre(), $nombresCanciones)) {
+                        $accion = $move;
+                        break;
+                    }
+                }
+                if ($apuesta->getPrediccion() == $accion) {
+                    $usuario = $apuesta->getUsuario();
+                    $usuario->setCreditos($usuario->getCreditos() + $apuesta->getCantidad() * $apuesta->getCuota());
+                }
+                $entityManager->remove($apuesta);
             }
-            $entityManager->remove($apuesta);
         }
         // Guarda los cambios en la base de datos
         $entityManager->flush();
