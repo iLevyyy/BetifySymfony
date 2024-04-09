@@ -57,3 +57,7 @@ Json_BBDD:
 enviar_solicitud:
     path: /amistades/enviar
     controller: App\Controller\AmistadesController::crearSolicitud
+
+gestionar_solicitud:
+    path: /amistades/gestionar
+    controller: App\Controller\AmistadesController::gestionarSolicitud
