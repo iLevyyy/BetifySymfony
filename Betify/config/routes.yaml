@@ -54,3 +54,6 @@ Json_BBDD:
     path: /insertar-datos-desde-json
     controller: App\Controller\storage\DataController::insertarDatosDesdeJson
 
+enviar_solicitud:
+    path: /amistades/enviar
+    controller: App\Controller\AmistadesController::crearSolicitud
