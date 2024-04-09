@@ -18,13 +18,13 @@ class Solicitud
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Usuarios")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(referencedColumnName="idusuario",nullable=false)
      */
     private $remitente;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Usuarios")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(referencedColumnName="idusuario",nullable=false)
      */
     private $receptor;
 
