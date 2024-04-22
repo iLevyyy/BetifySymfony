@@ -9,24 +9,25 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="solicitud")
  * @ORM\Entity
+ * 
  */
 class Solicitud
 {
     /**
      * @ORM\Id()
-     * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(name="id", type="integer")
      */
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Usuarios")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Usuarios")
      * @ORM\JoinColumn(referencedColumnName="idUsuario",nullable=false)
      */
     private $remitente;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Usuarios")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Usuarios")
      * @ORM\JoinColumn(referencedColumnName="idUsuario",nullable=false)
      */
     private $receptor;
