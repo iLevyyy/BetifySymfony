@@ -19,13 +19,13 @@ class Amistades
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Usuarios")
-     * @ORM\JoinColumn(name="Usuario1_idUsuario", referencedColumnName="idusuario", nullable=false)
+     * @ORM\JoinColumn(name="Usuario1_idUsuario", referencedColumnName="idUsuario", nullable=false)
      */
     private $usuario1;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Usuarios")
-     * @ORM\JoinColumn(name="Usuario2_idUsuario", referencedColumnName="idusuario", nullable=false)
+     * @ORM\JoinColumn(name="Usuario2_idUsuario", referencedColumnName="idUsuario", nullable=false)
      */
     private $usuario2;
 

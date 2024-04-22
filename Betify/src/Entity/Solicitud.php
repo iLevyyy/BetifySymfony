@@ -5,7 +5,10 @@ use App\Entity\Usuarios;
 
 use Doctrine\ORM\Mapping as ORM;
 /**
- * @ORM\Entity(repositoryClass="App\Repository\SolicitudRepository")
+ * Solicitud
+ *
+ * @ORM\Table(name="solicitud")
+ * @ORM\Entity
  */
 class Solicitud
 {
@@ -18,13 +21,13 @@ class Solicitud
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Usuarios")
-     * @ORM\JoinColumn(referencedColumnName="idusuario",nullable=false)
+     * @ORM\JoinColumn(referencedColumnName="idUsuario",nullable=false)
      */
     private $remitente;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Usuarios")
-     * @ORM\JoinColumn(referencedColumnName="idusuario",nullable=false)
+     * @ORM\JoinColumn(referencedColumnName="idUsuario",nullable=false)
      */
     private $receptor;
 

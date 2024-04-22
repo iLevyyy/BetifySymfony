@@ -3,23 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Amistades;
-use App\Entity\Apuestas;
-use App\Entity\Artistas;
-use App\Entity\Canciones;
-use App\Entity\CancionesDia1;
-use App\Entity\CancionesDia2;
-use App\Entity\CancionesDia3;
-use App\Entity\CancionesWeek;
 use App\Entity\Solicitud;
 use App\Entity\Usuarios;
-use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
-use PHPUnit\Util\Json;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManagerInterface;
 
 class AmistadesController extends AbstractController
@@ -59,7 +47,7 @@ class AmistadesController extends AbstractController
         $emisor = $this->entityManager->getRepository(Usuarios::class)->findOneBy(['nombreusuario' => $data['nombre']]);
 
         if (!$emisor || !$receptor) {
-            return $this->json(['mensaje' => 'Ha ocurrido un problema al enviar la solicitud', 'success' => false,], Response::HTTP_OK);
+            return $this->json(['mensaje' => 'Ha ocurrido un problema al procesar la solicitud', 'success' => false,], Response::HTTP_OK);
         }
 
         if($accion == 'aceptar'){
@@ -68,6 +56,7 @@ class AmistadesController extends AbstractController
         }
         $solicitud = $this->entityManager->getRepository(Solicitud::class)->findOneBy(['remitente' => $emisor,'receptor' => $receptor]);
         $this->entityManager->remove($solicitud);
+        $this->entityManager->flush();
 
         return $this->json(['mensaje' => 'Solicitud de amistad gestionada con exito', 'success' => true,], Response::HTTP_OK);
     }
