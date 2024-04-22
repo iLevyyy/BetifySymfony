@@ -46,9 +46,13 @@ class AmistadesController extends AbstractController
         $receptor = $this->entityManager->getRepository(Usuarios::class)->findOneBy(['idusuario' => $data['token']]);
         $emisor = $this->entityManager->getRepository(Usuarios::class)->findOneBy(['nombreusuario' => $data['nombre']]);
 
-        if (!$emisor || !$receptor) {
-            return $this->json(['mensaje' => 'Ha ocurrido un problema al procesar la solicitud', 'success' => false,], Response::HTTP_OK);
+        if (!$emisor) {
+            return $this->json(['mensaje' => 'Error al gestionar el token', 'success' => false,], Response::HTTP_OK);
         }
+        if (!$receptor) {
+            return $this->json(['mensaje' => 'Usuario no encontrado', 'success' => false,], Response::HTTP_OK);
+        }
+
 
         if($accion == 'aceptar'){
             $amistad = new Amistades($emisor,$receptor);
