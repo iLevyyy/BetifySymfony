@@ -57,14 +57,31 @@ class AmistadesController extends AbstractController
         }
 
 
-        if($accion == 'aceptar'){
-            $amistad = new Amistades($emisor,$receptor);
+        if ($accion == 'aceptar') {
+            $amistad = new Amistades($emisor, $receptor);
             $this->entityManager->persist($amistad);
         }
-        $solicitud = $this->entityManager->getRepository(Solicitud::class)->findOneBy(['remitente' => $emisor,'receptor' => $receptor]);
+        $solicitud = $this->entityManager->getRepository(Solicitud::class)->findOneBy(['remitente' => $emisor, 'receptor' => $receptor]);
         $this->entityManager->remove($solicitud);
         $this->entityManager->flush();
 
         return $this->json(['mensaje' => 'Solicitud de amistad gestionada con exito', 'success' => true,], Response::HTTP_OK);
+    }
+    public function getUserPetitions($token)
+    {
+        $peticionesPrimeraColumna = $this->entityManager->getRepository(Solicitud::class)->findBy(['receptor' => $token]);
+        return $peticionesPrimeraColumna;
+    }
+
+    public function sendUserPetitionsNames(Request $request)
+    {
+        $data = json_decode($request->getContent(), true);
+        $token = $data['token'];
+        $peticiones = $this->getUserPetitions($token);
+        $nombres = [];
+        foreach ($peticiones as $peticion) {
+            array_push($nombres, $peticion->getRemitente()->getNombreUsuario());
+        }
+        return $this->json(['nombres' => $nombres, 'success' => true,], Response::HTTP_OK);
     }
 }

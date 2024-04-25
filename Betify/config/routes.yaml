@@ -58,6 +58,10 @@ enviar_solicitud:
     path: /amistades/crear
     controller: App\Controller\AmistadesController::crearSolicitud
 
+obtener_peticiones_amistad:
+    path: /amistades/obtener
+    controller: App\Controller\AmistadesController::sendUserPetitionsNames
+
 gestionar_solicitud:
     path: /amistades/gestionar
     controller: App\Controller\AmistadesController::gestionarSolicitud
@@ -66,3 +70,4 @@ conseguir_top_songs:
     path: /songs/getTop20
     controller: App\Controller\apiTest::getTopSongs
     methods: ['GET']
+
