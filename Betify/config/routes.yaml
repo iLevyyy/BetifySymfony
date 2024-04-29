@@ -59,8 +59,13 @@ enviar_solicitud:
     controller: App\Controller\AmistadesController::crearSolicitud
 
 obtener_peticiones_amistad:
-    path: /amistades/obtener
+    path: /amistades/obtenerPeticiones
     controller: App\Controller\AmistadesController::sendUserPetitionsNames
+
+obtener_amistades:
+    path: /amistades/obtenerAmistades
+    controller: App\Controller\AmistadesController::sendUserFriendList
+
 
 gestionar_solicitud:
     path: /amistades/gestionar

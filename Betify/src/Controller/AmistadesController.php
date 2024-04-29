@@ -72,6 +72,14 @@ class AmistadesController extends AbstractController
         $peticionesPrimeraColumna = $this->entityManager->getRepository(Solicitud::class)->findBy(['receptor' => $token]);
         return $peticionesPrimeraColumna;
     }
+    public function getUserFriends($token)
+    {
+        $amistadesPrimeraColumna = $this->entityManager->getRepository(Amistades::class)->findBy(['usuario1' => $token]);
+        $amistadesSegundaColumna = $this->entityManager->getRepository(Amistades::class)->findBy(['usuario2' => $token]);
+        $amistades = array_merge($amistadesPrimeraColumna, $amistadesSegundaColumna);
+
+        return $amistades;
+    }
 
     public function sendUserPetitionsNames(Request $request)
     {
@@ -81,6 +89,21 @@ class AmistadesController extends AbstractController
         $nombres = [];
         foreach ($peticiones as $peticion) {
             array_push($nombres, $peticion->getRemitente()->getNombreUsuario());
+        }
+        return $this->json(['nombres' => $nombres, 'success' => true,], Response::HTTP_OK);
+    }
+    public function sendUserFriendList(Request $request)
+    {
+        $data = json_decode($request->getContent(), true);
+        $token = $data['token'];
+        $amistades = $this->getUserFriends($token);
+        $nombres = [];
+        foreach ($amistades as $amistad) {
+            if($amistad->getUsuario1()->getIdUsuario() != $token){
+                array_push($nombres,$amistad->getUsuario2()->getNombreUsuario());
+            }elseif ($amistad->getUsuario2()->getIdUsuario() != $token) {
+                array_push($nombres,$amistad->getUsuario1()->getNombreUsuario());
+            }
         }
         return $this->json(['nombres' => $nombres, 'success' => true,], Response::HTTP_OK);
     }
