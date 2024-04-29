@@ -5,7 +5,11 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\AmistadesRepository")
+ * Solicitud
+ *
+ * @ORM\Table(name="amistades")
+ * @ORM\Entity
+ * 
  */
 class Amistades
 {
