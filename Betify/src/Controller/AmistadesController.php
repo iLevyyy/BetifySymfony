@@ -32,6 +32,20 @@ class AmistadesController extends AbstractController
         if (!$receptor) {
             return $this->json(['mensaje' => 'Usuario no encontrado', 'success' => false,], Response::HTTP_OK);
         }
+        if($emisor->getIdUsuario() == $receptor->getIdUsuario()){
+            return $this->json(['mensaje' => 'No te puedes agregar a ti mismo', 'success' => false,], Response::HTTP_OK);
+        }
+        
+        $existingFriend =  $this->entityManager->getRepository(Amistades::class)->findOneBy(['usuario1' => $emisor->getIdUsuario(),'usuario2' => $receptor->getIdUsuario()]);
+        $existingFriend2 =  $this->entityManager->getRepository(Amistades::class)->findOneBy(['usuario2' => $emisor->getIdUsuario(),'usuario1' => $receptor->getIdUsuario()]);
+        if($existingFriend || $existingFriend2){
+            return $this->json(['mensaje' => 'Ya eres amigo de este usuario', 'success' => false,], Response::HTTP_OK);
+        }
+        $existingPetition = $this->entityManager->getRepository(Solicitud::class)->findOneBy(['remitente' => $emisor->getIdUsuario(),'receptor' => $receptor->getIdUsuario()]);
+        if($existingPetition){
+            return $this->json(['mensaje' => 'Ya hay una peticion pendiente a este usuario', 'success' => false,], Response::HTTP_OK);
+        }
+
         $solicitud = new Solicitud();
         $solicitud->setRemitente($emisor);
         $solicitud->setReceptor($receptor);
@@ -55,17 +69,19 @@ class AmistadesController extends AbstractController
         if (!$receptor) {
             return $this->json(['mensaje' => 'Usuario no encontrado', 'success' => false,], Response::HTTP_OK);
         }
-
-
+        $solicitud = $this->entityManager->getRepository(Solicitud::class)->findOneBy(['remitente' => $emisor, 'receptor' => $receptor]);
+        if ($solicitud == null) {
+            return $this->json(['mensaje' => 'Error al gestionar la solicitud', 'success' => false,], Response::HTTP_OK);
+        }
+        $this->entityManager->remove($solicitud);
+        $this->entityManager->flush();
         if ($accion == 'aceptar') {
             $amistad = new Amistades($emisor, $receptor);
             $this->entityManager->persist($amistad);
+            return $this->json(['mensaje' => 'Solicitud de amistad aceptada con exito', 'success' => true,], Response::HTTP_OK);
+        } else {
+            return $this->json(['mensaje' => 'Solicitud de amistad rechazada con exito', 'success' => true,], Response::HTTP_OK);
         }
-        $solicitud = $this->entityManager->getRepository(Solicitud::class)->findOneBy(['remitente' => $emisor, 'receptor' => $receptor]);
-        $this->entityManager->remove($solicitud);
-        $this->entityManager->flush();
-
-        return $this->json(['mensaje' => 'Solicitud de amistad gestionada con exito', 'success' => true,], Response::HTTP_OK);
     }
     public function getUserPetitions($token)
     {
@@ -99,10 +115,10 @@ class AmistadesController extends AbstractController
         $amistades = $this->getUserFriends($token);
         $nombres = [];
         foreach ($amistades as $amistad) {
-            if($amistad->getUsuario1()->getIdUsuario() != $token){
-                array_push($nombres,$amistad->getUsuario2()->getNombreUsuario());
-            }elseif ($amistad->getUsuario2()->getIdUsuario() != $token) {
-                array_push($nombres,$amistad->getUsuario1()->getNombreUsuario());
+            if ($amistad->getUsuario1()->getIdUsuario() != $token) {
+                array_push($nombres, $amistad->getUsuario2()->getNombreUsuario());
+            } elseif ($amistad->getUsuario2()->getIdUsuario() != $token) {
+                array_push($nombres, $amistad->getUsuario1()->getNombreUsuario());
             }
         }
         return $this->json(['nombres' => $nombres, 'success' => true,], Response::HTTP_OK);
