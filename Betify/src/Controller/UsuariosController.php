@@ -16,6 +16,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use App\Form\UsuariosType;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Controller\AmistadesController;
+
 class UsuariosController extends AbstractController
 {
     private $entityManager;
@@ -36,11 +37,13 @@ class UsuariosController extends AbstractController
 
         if ($usuario != null) {
             $id = $usuario->getIdUsuario();
-            $solicitudesNombres = (new AmistadesController($this->entityManager))->getUserPetitions($usuario->getIdUsuario());
-            $amistadesNombres = (new AmistadesController($this->entityManager))->getUserFriends($usuario->getIdUsuario());
+            $parameters = array('token' => $usuario->getIdUsuario());
+            $request = new Request($parameters);
+            $solicitudesNombres = (new AmistadesController($this->entityManager))->getUserPetitionsNames($usuario->getIdUsuario());
+            $amistadesNombres = (new AmistadesController($this->entityManager))->getUserFriendsNames($usuario->getIdUsuario());
             return $this->json(['boolean' => true, 'token' => $id, 'creditos' => $usuario->getCreditos(), 'solicitudesnombres' => $solicitudesNombres, 'amistadesombres' => $amistadesNombres], Response::HTTP_OK);
         } else {
-            return $this->json(['boolean' => false], Response::HTTP_OK);
+            return $this->json(['boolean' => false, 'message' => 'Correo o contraseña incorrectos'], Response::HTTP_OK);
         }
     }
 
