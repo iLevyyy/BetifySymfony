@@ -37,8 +37,6 @@ class UsuariosController extends AbstractController
 
         if ($usuario != null) {
             $id = $usuario->getIdUsuario();
-            $parameters = array('token' => $usuario->getIdUsuario());
-            $request = new Request($parameters);
             $solicitudesNombres = (new AmistadesController($this->entityManager))->getUserPetitionsNames($usuario->getIdUsuario());
             $amistadesNombres = (new AmistadesController($this->entityManager))->getUserFriendsNames($usuario->getIdUsuario());
             return $this->json(['boolean' => true, 'token' => $id, 'creditos' => $usuario->getCreditos(), 'solicitudesnombres' => $solicitudesNombres, 'amistadesombres' => $amistadesNombres], Response::HTTP_OK);
