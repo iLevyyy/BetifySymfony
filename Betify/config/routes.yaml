@@ -54,6 +54,10 @@ Json_BBDD:
     path: /insertar-datos-desde-json
     controller: App\Controller\storage\DataController::insertarDatosDesdeJson
 
+actualizar_canciones_BBDD:
+    path: /canciones/actualizar
+    controller: App\Controller\DataController::updateTop20DailySongs
+
 enviar_solicitud:
     path: /amistades/crear
     controller: App\Controller\AmistadesController::crearSolicitud

@@ -29,19 +29,25 @@ class Canciones
     private $nombre = 'NULL';
 
     /**
-     * @var int
+     * @var int|null
      *
-     * @ORM\Column(name="Reproducciones", type="integer", nullable=false)
+     * @ORM\Column(name="Reproducciones", type="integer", nullable=true)
      */
     private $reproducciones;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="Puesto", type="integer", nullable=false)
+     * @ORM\Column(name="Puesto", type="integer", nullable=true)
      */
     private $puesto;
 
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="Artista", type="string", length=90, nullable=true, options={"default"="NULL"})
+     */
+    private $artista = 'NULL';
 
 
 
@@ -53,6 +59,15 @@ class Canciones
     public function getIdCancion(): int
     {
         return $this->idcancion;
+    }
+    /**
+     * Obtener el valor de idcancion
+     *
+     * @return int
+     */
+    public function getArtista(): string
+    {
+        return $this->artista;
     }
     /**
      * Obtener el valor de nombre
@@ -73,16 +88,18 @@ class Canciones
     {
         $this->nombre = $nombre;
     }
+    public function setArtista(?string $artista): void
+    {
+        $this->artista = $artista;
+    }
     public function getReproducciones(): ?int
     {
         return $this->reproducciones;
     }
 
-    public function setReproducciones(int $reproducciones): self
+    public function setReproducciones(int $reproducciones): void
     {
         $this->reproducciones = $reproducciones;
-
-        return $this;
     }
 
     public function getPuesto(): ?int

@@ -14,6 +14,12 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class DataController extends AbstractController
 {
+    private $entityManager;
+
+    public function __construct(EntityManagerInterface $entityManager)
+    {
+        $this->entityManager = $entityManager;
+    }
     /**
      * @Route("/insertar-datos-desde-json", name="insertar_datos_desde_json")
      */
@@ -156,5 +162,110 @@ class DataController extends AbstractController
 
         // Mensaje de éxito
         return new Response('Datos insertados exitosamente.');
+    }
+    public function getTop20DailySongs()
+    {
+        // Credenciales de la API de Spotify
+        $client_id = '62c59ffd98ff48419f68487957a44b84';
+        $client_secret = '59ae1ac04a9740bea1dc14569bfb3d99';
+
+        // Autenticación y obtención del token de acceso
+        $token_url = 'https://accounts.spotify.com/api/token';
+        $auth_header = base64_encode($client_id . ':' . $client_secret);
+        $auth_data = array(
+            'grant_type' => 'client_credentials',
+        );
+
+        $auth_options = array(
+            'http' => array(
+                'header' => "Authorization: Basic $auth_header\r\n" . "Content-Type: application/x-www-form-urlencoded\r\n",
+                'method' => 'POST',
+                'content' => http_build_query($auth_data),
+            ),
+        );
+
+        $auth_context = stream_context_create($auth_options);
+        $auth_response = file_get_contents($token_url, false, $auth_context);
+        $auth_result = json_decode($auth_response, true);
+        $access_token = $auth_result['access_token'];
+
+        // Petición para obtener las 20 canciones más escuchadas
+        $api_url = 'https://api.spotify.com/v1/playlists/37i9dQZEVXbMDoHDwVN2tF/tracks?fields=items(track(name,artists(name)))&limit=20';
+        $request_headers = array(
+            'Authorization: Bearer ' . $access_token,
+        );
+
+        $curl = curl_init($api_url);
+        curl_setopt($curl, CURLOPT_HTTPHEADER, $request_headers);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+
+        $response = curl_exec($curl);
+        $data = json_decode($response, true);
+
+        if (isset($data['items'])) {
+            $puesto = 1;
+            $songs = [];
+            foreach ($data['items'] as $item) {
+                $song = new Canciones();
+                $song->setNombre($item['track']['name']);
+                $song->setPuesto($puesto);
+                $artista = '';
+                foreach ($item['track']['artists'] as $key => $artist) {
+                    $artista .= $artist['name'] . ', ';
+                }
+                $artista = rtrim($artista, ', ');
+                $song->setArtista($artista);
+                $puesto++;
+                array_push($songs, $song);
+            }
+        }
+        curl_close($curl);
+        return $songs;
+    }
+
+    public  function updateTop20DailySongs()
+    {
+        
+        $oldSongs = $this->entityManager->getRepository(CancionesDia1::class)->findAll();
+        foreach ($oldSongs as $oldSong) {
+            $this->entityManager->remove($oldSong);
+        }
+        $this->entityManager->flush();
+
+        $currentSongs = $this->entityManager->getRepository(Canciones::class)->findAll();
+        $currentSongsClassed = $this->changeClass($currentSongs);
+        foreach ($currentSongsClassed as $key => $song) {
+            $this->entityManager->persist($song);
+        }
+        $this->entityManager->flush();
+
+        $newOldSongs = $this->entityManager->getRepository(Canciones::class)->findAll();
+        foreach ($newOldSongs as $key => $song) {
+            $this->entityManager->remove($song);
+        }
+        $this->entityManager->flush();
+
+        $newSongs = $this->getTop20DailySongs();
+        foreach ($newSongs as $key => $newSong) {
+            $this->entityManager->persist($newSong);
+        }
+        $this->entityManager->flush();
+
+
+
+        return $this->json(['success' => true, 'message'=>'Canciones actualizadas correctamente',], Response::HTTP_OK);
+    }
+    public function changeClass($songs)
+    {
+        $changedSongs = array();
+        foreach ($songs as $key => $song) {
+            $changedSong = new CancionesDia1();
+            $changedSong->setNombre($song->getNombre());
+            $changedSong->setPuesto($song->getPuesto());
+            $changedSong->setArtista($song->getArtista());
+            //$changedSong->setReproducciones($song->getReproducciones());
+            array_push($changedSongs, $changedSong);
+        }
+        return $changedSongs;
     }
 }

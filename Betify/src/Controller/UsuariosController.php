@@ -15,7 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use App\Form\UsuariosType;
 use Doctrine\ORM\EntityManagerInterface;
-
+use App\Controller\AmistadesController;
 class UsuariosController extends AbstractController
 {
     private $entityManager;
@@ -36,7 +36,9 @@ class UsuariosController extends AbstractController
 
         if ($usuario != null) {
             $id = $usuario->getIdUsuario();
-            return $this->json(['boolean' => true, 'token' => $id, 'creditos' => $usuario->getCreditos(),], Response::HTTP_OK);
+            $solicitudesNombres = (new AmistadesController($this->entityManager))->getUserPetitions($usuario->getIdUsuario());
+            $amistadesNombres = (new AmistadesController($this->entityManager))->getUserFriends($usuario->getIdUsuario());
+            return $this->json(['boolean' => true, 'token' => $id, 'creditos' => $usuario->getCreditos(), 'solicitudesnombres' => $solicitudesNombres, 'amistadesombres' => $amistadesNombres], Response::HTTP_OK);
         } else {
             return $this->json(['boolean' => false], Response::HTTP_OK);
         }
@@ -61,29 +63,53 @@ class UsuariosController extends AbstractController
         $this->entityManager->persist($usuario);
         $this->entityManager->flush();
 
-        return $this->json(['mensaje' => 'Usuario creado correctamente', 'boolean' => true], Response::HTTP_OK);
+
+        return $this->json(['mensaje' => 'Usuario creado correctamente', 'boolean' => true,], Response::HTTP_OK);
     }
 
 
     public function actualizarUsuario(Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
-        $usuario = new Usuarios();
-
-        $usuario = $this->entityManager->getRepository(Usuarios::class)->findOneBy(['email' => $data['Email']]);
+        $newEmail = trim($data['newEmail']);
+        $newNombre = trim($data['newNombreUsuario']);
+        $usuario = $this->entityManager->getRepository(Usuarios::class)->findOneBy(['token' => $data['token']]);
 
         if (!$usuario) {
             return $this->json(['Error' => 'Usuario no encontrado', 'boolean' => false], Response::HTTP_NOT_FOUND);
         }
 
-        if (!$data["newNombreUsuario"] == '') {
-            $usuario->setNombreUsuario($data['newNombreUsuario']);
+        $queryBuilder = $this->entityManager->createQueryBuilder();
+
+        $queryBuilder->select('u.nombreusuario') // Seleccionar solo el campo 'nombre' de la entidad 'Usuarios'
+            ->from(Usuarios::class, 'u'); // Definir la entidad y el alias
+
+        $nombresUsuarios = $queryBuilder->getQuery()->getResult();
+        foreach ($nombresUsuarios as $key => $nombre) {
+            if ($nombre == $newNombre) {
+                return $this->json(['mensaje' => 'El nombre de usuario no está disponible', 'success' => false], Response::HTTP_OK);
+            }
         }
+        if (!$data["newNombreUsuario"] == '') {
+            $usuario->setNombreUsuario($newNombre);
+        }
+
         if (!trim($data["newPassword"]) == '') {
             $usuario->setPassword($data['newPassword']);
         }
+
+        $queryBuilder = $this->entityManager->createQueryBuilder();
+        $queryBuilder->select('u.email') // Seleccionar solo el campo 'nombre' de la entidad 'Usuarios'
+            ->from(Usuarios::class, 'u'); // Definir la entidad y el alias
+        $correos = $queryBuilder->getQuery()->getResult();
+
+        foreach ($correos as $key => $correo) {
+            if ($correo == $newEmail) {
+                return $this->json(['mensaje' => 'El correo ya esta en uso', 'success' => false], Response::HTTP_OK);
+            }
+        }
         if (!trim($data["newEmail"]) == '') {
-            $usuario->setEmail($data['newEmail']);
+            $usuario->setEmail($newEmail);
         }
 
         $this->entityManager->flush();
@@ -103,7 +129,7 @@ class UsuariosController extends AbstractController
         $usuario1 = $this->entityManager->getRepository(Usuarios::class)->findOneBy(['idusuario' => $data['idUsuario1']]);
         $usuario2 = $this->entityManager->getRepository(Usuarios::class)->findOneBy(['idusuario' => $data['idUsuario2']]);
 
-        if(!$usuario1 || !$usuario2){
+        if (!$usuario1 || !$usuario2) {
             return $this->json(['mensaje' => 'Ha habido un error a la hora de crear la amistad', 'success' => false], Response::HTTP_OK);
         }
         // Crear una nueva instancia de la entidad Amistad
@@ -115,6 +141,6 @@ class UsuariosController extends AbstractController
         // Aplicar los cambios a la base de datos
         $this->entityManager->flush();
 
-        return $this->json(['mensaje' => 'Amistad creada correctamente entre '.$usuario1->getNombreUsuario().' y '.$usuario2->getNombreUsuario(), 'success' => true], Response::HTTP_OK);
+        return $this->json(['mensaje' => 'Amistad creada correctamente entre ' . $usuario1->getNombreUsuario() . ' y ' . $usuario2->getNombreUsuario(), 'success' => true], Response::HTTP_OK);
     }
 }
