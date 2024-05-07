@@ -74,7 +74,7 @@ class UsuariosController extends AbstractController
         $data = json_decode($request->getContent(), true);
         $newEmail = trim($data['newEmail']);
         $newNombre = trim($data['newNombreUsuario']);
-        $usuario = $this->entityManager->getRepository(Usuarios::class)->findOneBy(['token' => $data['token']]);
+        $usuario = $this->entityManager->getRepository(Usuarios::class)->findOneBy(['idusuario' => $data['token']]);
 
         if (!$usuario) {
             return $this->json(['Error' => 'Usuario no encontrado', 'boolean' => false], Response::HTTP_NOT_FOUND);
