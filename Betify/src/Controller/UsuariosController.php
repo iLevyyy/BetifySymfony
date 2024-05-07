@@ -121,7 +121,7 @@ class UsuariosController extends AbstractController
 
     public function borrarUsuario(Request $request, ManagerRegistry $managerRegistry): JsonResponse
     {
-        return $this->render('usuarios/borrar.html.twig');
+        return $this->render('usuarios/borrar.html.twig');        
     }
 
     public function crearAmistad(Request $request)
