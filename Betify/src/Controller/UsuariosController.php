@@ -54,6 +54,7 @@ class UsuariosController extends AbstractController
         $usuario->setNombreUsuario($data['NombreUsuario']);
         $usuario->setPassword($data['Password']);
         $usuario->setEmail($data['Email']);
+        $usuario->setCreditos(150);
 
         if ($this->entityManager->getRepository(Usuarios::class)->findOneBy(['email' => $usuario->getEmail()])) {
             return $this->json(['Error al regitrar' => 'El correo electronico ya existe', 'boolean' => false], Response::HTTP_OK);
