@@ -53,7 +53,10 @@ class AmistadesController extends AbstractController
 
         $this->entityManager->persist($solicitud);
         $this->entityManager->flush();
-        return $this->json(['mensaje' => 'Solicitud de amistad enviada con exito', 'success' => true,], Response::HTTP_OK);
+
+        $petitions = $this->getUserPetitionsNames($data['token']);
+        $amistades = $this->getUserFriendsNames($data['token']);
+        return $this->json(['mensaje' => 'Solicitud de amistad enviada con exito', 'success' => true,'amigosnombres' => $amistades, 'solicitudesnombres' => $petitions,], Response::HTTP_OK);
     }
 
     public function gestionarSolicitud(Request $request)
