@@ -176,8 +176,10 @@ class Usuarios
         $this->password = $password;
     }
 
-
-
+    public function isAdmin(): bool
+    {
+        return $this->isadmin == '1';
+    }
     // /**
     //  * Obtener la colección de apuestasIdapuesta
     //  *

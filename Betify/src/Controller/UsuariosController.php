@@ -121,7 +121,7 @@ class UsuariosController extends AbstractController
 
     public function borrarUsuario(Request $request, ManagerRegistry $managerRegistry): JsonResponse
     {
-        return $this->render('usuarios/borrar.html.twig');        
+        return $this->render('usuarios/borrar.html.twig');
     }
 
     public function crearAmistad(Request $request)
@@ -144,5 +144,15 @@ class UsuariosController extends AbstractController
         $this->entityManager->flush();
 
         return $this->json(['mensaje' => 'Amistad creada correctamente entre ' . $usuario1->getNombreUsuario() . ' y ' . $usuario2->getNombreUsuario(), 'success' => true], Response::HTTP_OK);
+    }
+    public function checkAdmin(Request $request)
+    {
+        $data = json_decode($request->getContent(), true);
+        $usuario = $this->entityManager->getRepository(Usuarios::class)->findOneBy(['idusuario' => $data['token']]);
+        if ($usuario->isAdmin()) {
+            return $this->json(['success' => true], Response::HTTP_OK);
+        } else {
+            return $this->json(['success' => false], Response::HTTP_OK);
+        }
     }
 }

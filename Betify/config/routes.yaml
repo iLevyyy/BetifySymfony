@@ -24,6 +24,9 @@ borrar_usuario:
     path: /usuarios/borrar
     controller: App\Controller\UsuariosController::borrarUsuario
 
+usuario_check_admin:
+    path: /usuarios/checkAdmin
+    controller: App\Controller\UsuariosController::checkAdmin
 
 cancion_listar:
     path: /cancion/listar
