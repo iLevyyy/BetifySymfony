@@ -4,13 +4,12 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use App\Entity\Usuarios;
 use DateTime;
 
 /**
  * Apuestas
  *
- * @ORM\Table(name="apuestas", indexes={@ORM\Index(name="fk_Apuestas_Canciones1_idx", columns={"Canciones_idCancion"}), @ORM\Index(name="fk_Apuestas_Artistas1_idx", columns={"Artistas_idArtista"})})
+ * @ORM\Table(name="apuestas", indexes={@ORM\Index(name="fk_Apuestas_Canciones1_idx", columns={"Canciones_idCancion"})})
  * @ORM\Entity
  */
 class Apuestas
@@ -59,16 +58,6 @@ class Apuestas
      * @ORM\Column(name="FechaFinal", type="datetime", nullable=false)
      */
     private $fechafinal;
-
-    /**
-     * @var \Artistas
-     *
-     * @ORM\ManyToOne(targetEntity="Artistas")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="Artistas_idArtista", referencedColumnName="idArtista")
-     * })
-     */
-    private $artistasIdartista;
 
     /**
      * @var \Canciones
@@ -213,26 +202,6 @@ class Apuestas
     public function setFechaFinal(\DateTime $fechafinal): void
     {
         $this->fechafinal = $fechafinal;
-    }
-
-    /**
-     * Obtener el valor de artistasIdartista
-     *
-     * @return \Artistas
-     */
-    public function getArtistasIdartista(): ?Artistas
-    {
-        return $this->artistasIdartista;
-    }
-
-    /**
-     * Establecer el valor de artistasIdartista
-     *
-     * @param \Artistas $artistasIdartista
-     */
-    public function setArtistasIdartista(?Artistas $artistasIdartista): void
-    {
-        $this->artistasIdartista = $artistasIdartista;
     }
 
     /**
