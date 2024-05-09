@@ -152,7 +152,7 @@ class UsuariosController extends AbstractController
         if ($usuario->isAdmin()) {
             return $this->json(['success' => true], Response::HTTP_OK);
         } else {
-            return $this->json(['success' => false], Response::HTTP_OK);
+            return $this->json(['success' => false, 'mensaje' => 'Contenido restringido'], Response::HTTP_OK);
         }
     }
 }
