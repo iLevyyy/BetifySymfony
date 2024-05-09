@@ -72,18 +72,22 @@ class AmistadesController extends AbstractController
         if (!$receptor) {
             return $this->json(['mensaje' => 'Error al gestionar el token', 'success' => false,], Response::HTTP_OK);
         }
-        $solicitud = $this->entityManager->getRepository(Solicitud::class)->findOneBy(['remitente' => $emisor, 'receptor' => $receptor]);
+        $solicitud = $this->entityManager->getRepository(Solicitud::class)->findOneBy(['remitente' => $emisor->getIdUsuario(), 'receptor' => $receptor->getIdUsuario()]);
         if ($solicitud == null) {
             return $this->json(['mensaje' => 'Error al gestionar la solicitud', 'success' => false,], Response::HTTP_OK);
         }
         $this->entityManager->remove($solicitud);
         $this->entityManager->flush();
-        if ($accion == 'aceptar') {
-            $amistad = new Amistades($emisor, $receptor);
-            $this->entityManager->persist($amistad);
-            return $this->json(['mensaje' => 'Solicitud de amistad aceptada con exito', 'success' => true,], Response::HTTP_OK);
-        } else {
-            return $this->json(['mensaje' => 'Solicitud de amistad rechazada con exito', 'success' => true,], Response::HTTP_OK);
+        if ($accion != null) {
+            if ($accion == 'aceptar') {
+                $amistad = new Amistades($emisor, $receptor);
+                $this->entityManager->persist($amistad);
+                return $this->json(['mensaje' => 'Solicitud de amistad aceptada con exito', 'success' => true,], Response::HTTP_OK);
+            } else {
+                return $this->json(['mensaje' => 'Solicitud de amistad rechazada con exito', 'success' => true,], Response::HTTP_OK);
+            }
+        }else{
+            return $this->json(['mensaje' => 'No se ha indicado qué hacer con la solicitud', 'success' => false,], Response::HTTP_OK);
         }
     }
     public function getUserPetitions($token)
