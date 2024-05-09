@@ -56,7 +56,7 @@ class AmistadesController extends AbstractController
 
         $petitions = $this->getUserPetitionsNames($data['token']);
         $amistades = $this->getUserFriendsNames($data['token']);
-        return $this->json(['mensaje' => 'Solicitud de amistad enviada con exito', 'success' => true,'amigosnombres' => $amistades, 'solicitudesnombres' => $petitions,], Response::HTTP_OK);
+        return $this->json(['mensaje' => 'Solicitud de amistad enviada con exito', 'success' => true, 'amigosnombres' => $amistades, 'solicitudesnombres' => $petitions,], Response::HTTP_OK);
     }
 
     public function gestionarSolicitud(Request $request)
@@ -67,10 +67,10 @@ class AmistadesController extends AbstractController
         $emisor = $this->entityManager->getRepository(Usuarios::class)->findOneBy(['nombreusuario' => $data['nombre']]);
 
         if (!$emisor) {
-            return $this->json(['mensaje' => 'Error al gestionar el token', 'success' => false,], Response::HTTP_OK);
+            return $this->json(['mensaje' => 'Usuario no encontrado', 'success' => false,], Response::HTTP_OK);
         }
         if (!$receptor) {
-            return $this->json(['mensaje' => 'Usuario no encontrado', 'success' => false,], Response::HTTP_OK);
+            return $this->json(['mensaje' => 'Error al gestionar el token', 'success' => false,], Response::HTTP_OK);
         }
         $solicitud = $this->entityManager->getRepository(Solicitud::class)->findOneBy(['remitente' => $emisor, 'receptor' => $receptor]);
         if ($solicitud == null) {
