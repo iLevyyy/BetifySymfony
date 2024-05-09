@@ -124,9 +124,9 @@ class AmistadesController extends AbstractController
         $nombres = [];
         foreach ($amistades as $amistad) {
             if ($amistad->getUsuario1()->getIdUsuario() != $token) {
-                array_push($nombres, $amistad->getUsuario2()->getNombreUsuario());
-            } elseif ($amistad->getUsuario2()->getIdUsuario() != $token) {
                 array_push($nombres, $amistad->getUsuario1()->getNombreUsuario());
+            } elseif ($amistad->getUsuario2()->getIdUsuario() != $token) {
+                array_push($nombres, $amistad->getUsuario2()->getNombreUsuario());
             }
         }
         return $nombres;
