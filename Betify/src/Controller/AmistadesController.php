@@ -80,7 +80,7 @@ class AmistadesController extends AbstractController
         $this->entityManager->flush();
         if ($accion != null) {
             if ($accion == 'aceptar') {
-                $amistad = new Amistades($emisor, $receptor);
+                $amistad = new Amistades($receptor, $emisor);
                 $solicitudRepetida = $this->entityManager->getRepository(Solicitud::class)->findOneBy(['remitente' => $receptor->getIdUsuario(), 'receptor' => $emisor->getIdUsuario()]);
                 if ($solicitudRepetida) {
                     $this->entityManager->remove($solicitudRepetida);
@@ -114,7 +114,6 @@ class AmistadesController extends AbstractController
         $amistadesPrimeraColumna = $this->entityManager->getRepository(Amistades::class)->findBy(['usuario1' => $token]);
         $amistadesSegundaColumna = $this->entityManager->getRepository(Amistades::class)->findBy(['usuario2' => $token]);
         $amistades = array_merge($amistadesPrimeraColumna, $amistadesSegundaColumna);
-
         return $amistades;
     }
     public function getUserFriendsNames($token)
