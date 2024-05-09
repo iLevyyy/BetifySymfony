@@ -82,6 +82,7 @@ class AmistadesController extends AbstractController
             if ($accion == 'aceptar') {
                 $amistad = new Amistades($emisor, $receptor);
                 $this->entityManager->persist($amistad);
+                $this->entityManager->flush();
                 return $this->json(['mensaje' => 'Solicitud de amistad aceptada con exito', 'success' => true,], Response::HTTP_OK);
             } else {
                 return $this->json(['mensaje' => 'Solicitud de amistad rechazada con exito', 'success' => true,], Response::HTTP_OK);
