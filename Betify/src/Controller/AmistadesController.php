@@ -148,14 +148,7 @@ class AmistadesController extends AbstractController
         $data = json_decode($request->getContent(), true);
         $token = $data['token'];
         $amistades = $this->getUserFriends($token);
-        $nombres = [];
-        foreach ($amistades as $amistad) {
-            if ($amistad->getUsuario1()->getIdUsuario() != $token) {
-                array_push($nombres, $amistad->getUsuario2()->getNombreUsuario());
-            } elseif ($amistad->getUsuario2()->getIdUsuario() != $token) {
-                array_push($nombres, $amistad->getUsuario1()->getNombreUsuario());
-            }
-        }
+        $nombres = $this->getUserFriendsNames($token);
         return $this->json(['nombres' => $nombres, 'success' => true,], Response::HTTP_OK);
     }
 }
