@@ -25,7 +25,7 @@ usuario_editar:
     methods: ["PUT"]
 
 borrar_usuario:
-    path: /usuarios/borrar
+    path: /admin/borrarUsuario
     controller: App\Controller\UsuariosController::borrarUsuario
 
 usuario_check_admin:
