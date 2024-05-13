@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Entity;
 
@@ -9,11 +9,9 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="amistades")
  * @ORM\Entity
- * 
  */
 class Amistades
 {
-    
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -22,14 +20,14 @@ class Amistades
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Usuarios")
-     * @ORM\JoinColumn(name="Usuario1_idUsuario", referencedColumnName="idUsuario", nullable=false)
+     * @ORM\ManyToOne(targetEntity="App\Entity\Usuarios", cascade={"remove"})
+     * @ORM\JoinColumn(name="Usuario1_idUsuario", referencedColumnName="idUsuario", nullable=false, onDelete="CASCADE")
      */
     private $usuario1;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Usuarios")
-     * @ORM\JoinColumn(name="Usuario2_idUsuario", referencedColumnName="idUsuario", nullable=false)
+     * @ORM\ManyToOne(targetEntity="App\Entity\Usuarios", cascade={"remove"})
+     * @ORM\JoinColumn(name="Usuario2_idUsuario", referencedColumnName="idUsuario", nullable=false, onDelete="CASCADE")
      */
     private $usuario2;
 

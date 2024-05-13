@@ -1,15 +1,15 @@
 <?php
 
 namespace App\Entity;
-use App\Entity\Usuarios;
 
+use App\Entity\Usuarios;
 use Doctrine\ORM\Mapping as ORM;
+
 /**
  * Solicitud
  *
  * @ORM\Table(name="solicitud")
  * @ORM\Entity
- * 
  */
 class Solicitud
 {
@@ -21,14 +21,14 @@ class Solicitud
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Usuarios")
-     * @ORM\JoinColumn(referencedColumnName="idUsuario",nullable=false)
+     * @ORM\ManyToOne(targetEntity="App\Entity\Usuarios", cascade={"remove"})
+     * @ORM\JoinColumn(name="remitente_id", referencedColumnName="idUsuario", nullable=false, onDelete="CASCADE")
      */
     private $remitente;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Usuarios")
-     * @ORM\JoinColumn(referencedColumnName="idUsuario",nullable=false)
+     * @ORM\ManyToOne(targetEntity="App\Entity\Usuarios", cascade={"remove"})
+     * @ORM\JoinColumn(name="receptor_id", referencedColumnName="idUsuario", nullable=false, onDelete="CASCADE")
      */
     private $receptor;
 

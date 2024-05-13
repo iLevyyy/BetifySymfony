@@ -62,7 +62,7 @@ class Usuarios
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\OneToMany(targetEntity="Apuestas", mappedBy="usuario")
+     * @ORM\OneToMany(targetEntity="Apuestas", mappedBy="usuario", cascade={"remove"})
      */
     private $apuestas;
 
