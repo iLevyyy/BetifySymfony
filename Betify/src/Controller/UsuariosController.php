@@ -47,7 +47,15 @@ class UsuariosController extends AbstractController
 
     public function getUsersInfo()
     {
-        return $this->json(['success' => true, 'nombres' => $this->getUsersNames(), 'privilegios' => $this->getUsersPrivileges()], Response::HTTP_OK);
+        $data = [];
+        $userNames = $this->getUsersNames();
+        $userPrivileges = $this->getUsersPrivileges();
+
+        foreach ($userNames as $index => $name) {
+            $data[$name] = $userPrivileges[$index];
+        }
+
+        return $this->json(['success' => true, 'data' => $data], Response::HTTP_OK);
     }
     public function loginUsuarios(Request $request): JsonResponse
     {
