@@ -3,7 +3,7 @@ controllers:
     type: attribute
 
 usuario_login:
-    path: /usuarios/login   
+    path: /usuarios/login
     controller: App\Controller\UsuariosController::loginUsuarios
 
 cliente_listar_id:
@@ -13,12 +13,16 @@ cliente_listar_id:
 usuario_nuevo:
     path: /usuarios/registro
     controller: App\Controller\UsuariosController::crearUsuario
-    methods: ['POST']
+    methods: ["POST"]
+
+usuarios_listar:
+    path: /admin/listar
+    controller: App\Controller\UsuariosController::getUsersInfo
 
 usuario_editar:
     path: /usuarios/update
     controller: App\Controller\UsuariosController::actualizarUsuario
-    methods: ['PUT']
+    methods: ["PUT"]
 
 borrar_usuario:
     path: /usuarios/borrar
@@ -43,7 +47,7 @@ apuesta_listar:
 apuesta_crear:
     path: /apuestas/crear
     controller: App\Controller\ApuestasController::crearApuesta
-    methods: ['POST']
+    methods: ["POST"]
 
 comprobar_apuestas:
     path: /apuestas/check
@@ -73,7 +77,6 @@ obtener_amistades:
     path: /amistades/obtenerAmistades
     controller: App\Controller\AmistadesController::sendUserFriendList
 
-
 gestionar_solicitud:
     path: /amistades/gestionar
     controller: App\Controller\AmistadesController::gestionarSolicitud
@@ -81,5 +84,4 @@ gestionar_solicitud:
 conseguir_top_songs:
     path: /songs/getTop20
     controller: App\Controller\apiTest::getTopSongs
-    methods: ['GET']
-
+    methods: ["GET"]

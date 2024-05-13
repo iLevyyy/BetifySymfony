@@ -26,6 +26,29 @@ class UsuariosController extends AbstractController
         $this->entityManager = $entityManager;
     }
 
+    public function getUsersNames()
+    {
+        $usuarios = $this->entityManager->getRepository(Usuarios::class)->findAll();
+        $nombres = [];
+        foreach ($usuarios as $key => $usuario) {
+            array_push($nombres, $usuario->getNombreUsuario());
+        }
+        return $nombres;
+    }
+    public function getUsersPrivileges()
+    {
+        $usuarios = $this->entityManager->getRepository(Usuarios::class)->findAll();
+        $privileges = [];
+        foreach ($usuarios as $key => $usuario) {
+            array_push($privileges, $usuario->isAdmin());
+        }
+        return $privileges;
+    }
+
+    public function getUsersInfo()
+    {
+        return $this->json(['success' => true, 'nombres' => $this->getUsersPrivileges(), 'privilegios' => $this->getUsersPrivileges()], Response::HTTP_OK);
+    }
     public function loginUsuarios(Request $request): JsonResponse
     {
         $user = json_decode($request->getContent(), true);
