@@ -20,14 +20,14 @@ class Amistades
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Usuarios", cascade={"remove"})
-     * @ORM\JoinColumn(name="Usuario1_idUsuario", referencedColumnName="idUsuario", nullable=false, onDelete="CASCADE")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Usuarios")
+     * @ORM\JoinColumn(name="Usuario1_idUsuario", referencedColumnName="idUsuario", nullable=false)
      */
     private $usuario1;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Usuarios", cascade={"remove"})
-     * @ORM\JoinColumn(name="Usuario2_idUsuario", referencedColumnName="idUsuario", nullable=false, onDelete="CASCADE")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Usuarios")
+     * @ORM\JoinColumn(name="Usuario2_idUsuario", referencedColumnName="idUsuario", nullable=false)
      */
     private $usuario2;
 

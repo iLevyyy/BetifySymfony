@@ -21,14 +21,14 @@ class Solicitud
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Usuarios", cascade={"remove"})
-     * @ORM\JoinColumn(name="remitente_id", referencedColumnName="idUsuario", nullable=false, onDelete="CASCADE")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Usuarios")
+     * @ORM\JoinColumn(name="remitente_id", referencedColumnName="idUsuario", nullable=false)
      */
     private $remitente;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Usuarios", cascade={"remove"})
-     * @ORM\JoinColumn(name="receptor_id", referencedColumnName="idUsuario", nullable=false, onDelete="CASCADE")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Usuarios")
+     * @ORM\JoinColumn(name="receptor_id", referencedColumnName="idUsuario", nullable=false)
      */
     private $receptor;
 
