@@ -88,4 +88,4 @@ conseguir_top_songs:
 
 amistades_borrar:
     path: /amistades/borrar
-    controller: App\Controller\amistadesController::borrarAmistad
+    controller: App\Controller\amistadesController::callBorrarAmistad
