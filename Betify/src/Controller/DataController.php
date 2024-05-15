@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 class DataController extends AbstractController
 {
@@ -189,8 +190,8 @@ class DataController extends AbstractController
         $auth_result = json_decode($auth_response, true);
         $access_token = $auth_result['access_token'];
 
-        // Petición para obtener las 20 canciones más escuchadas
-        $api_url = 'https://api.spotify.com/v1/playlists/37i9dQZEVXbMDoHDwVN2tF/tracks?fields=items(track(name,artists(name)))&limit=20';
+        // Petición para obtener las 10 canciones más escuchadas
+        $api_url = 'https://api.spotify.com/v1/playlists/37i9dQZEVXbMDoHDwVN2tF/tracks?fields=items(track(name,artists(name)))&limit=10';
         $request_headers = array(
             'Authorization: Bearer ' . $access_token,
         );
@@ -225,7 +226,7 @@ class DataController extends AbstractController
 
     public  function updateTop20DailySongs()
     {
-        
+
         $oldSongs = $this->entityManager->getRepository(CancionesDia1::class)->findAll();
         foreach ($oldSongs as $oldSong) {
             $this->entityManager->remove($oldSong);
@@ -253,7 +254,7 @@ class DataController extends AbstractController
 
 
 
-        return $this->json(['success' => true, 'message'=>'Canciones actualizadas correctamente',], Response::HTTP_OK);
+        return $this->json(['success' => true, 'message' => 'Canciones actualizadas correctamente',], Response::HTTP_OK);
     }
     public function changeClass($songs)
     {
@@ -267,5 +268,16 @@ class DataController extends AbstractController
             array_push($changedSongs, $changedSong);
         }
         return $changedSongs;
+    }
+    public function sendSongsCall(Request $request)
+    {
+        $this->updateTop20DailySongs();
+        $canciones = $this->entityManager->getRepository(Canciones::class)->findAll();
+        $cancionesBien = [];
+        foreach ($canciones as $key => $cancion) {
+            $cancionInfo = ["Puesto" => $cancion->getPuesto(), "Cancion" => $cancion->getNombre(), "Artista" => $cancion->getArtista()];
+            array_push($cancionesBien,$cancionInfo);
+        }
+        return $this->json(['canciones' => $cancionesBien, 'success' => true], Response::HTTP_OK);
     }
 }
