@@ -95,14 +95,18 @@ class AmistadesController extends AbstractController
             return $this->json(['mensaje' => 'No se ha indicado qué hacer con la solicitud', 'success' => false,], Response::HTTP_OK);
         }
     }
-    public function borrarAmistad($token, $nombre)
+    public function borrarAmistad(Request $request)
     {
+        $data = json_decode($request->getContent(), true);
+        $token = $data['token'];
+        $nombre = $data['nombre'];
+
         $userToken = $this->entityManager->getRepository(Usuarios::class)->findOneBy(['idusuario' => $token]);
         $userNombre = $this->entityManager->getRepository(Usuarios::class)->findOneBy(['nombreusuario' => $nombre]);
 
         $posibleAmistad1 =  $this->entityManager->getRepository(Amistades::class)->findOneBy(['usuario1' => $userToken->getIdUsuario(), 'usuario2' => $userNombre->getIdUsuario()]);
         $posibleAmistad2 =  $this->entityManager->getRepository(Amistades::class)->findOneBy(['usuario2' => $userToken->getIdUsuario(), 'usuario1' => $userNombre->getIdUsuario()]);
-        if(!$posibleAmistad1 && !$posibleAmistad2){
+        if (!$posibleAmistad1 && !$posibleAmistad2) {
             return $this->json(['mensaje' => 'No se ha encontrado la amistad', 'success' => false,], Response::HTTP_OK);
         }
         if ($posibleAmistad1) {
@@ -112,12 +116,6 @@ class AmistadesController extends AbstractController
         }
         $this->entityManager->flush();
         return $this->json(['mensaje' => 'Amigo eliminado correctamente', 'success' => true,], Response::HTTP_OK);
-    }
-    public function callBorrarAmistad(Request $request){
-        $data = json_decode($request->getContent(), true);
-        $token = $data['token'];
-        $nombre = $data['nombre'];
-        return $this->borrarAmistad($token,$nombre);
     }
     public function getUserPetitions($token)
     {
