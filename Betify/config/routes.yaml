@@ -85,3 +85,7 @@ conseguir_top_songs:
     path: /songs/getTop20
     controller: App\Controller\apiTest::getTopSongs
     methods: ["GET"]
+
+amistades_borrar:
+    path: /amistades/borrar
+    controller: App\Controller\amistadesController::borrarAmistad

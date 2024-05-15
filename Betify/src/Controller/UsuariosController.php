@@ -170,8 +170,7 @@ class UsuariosController extends AbstractController
         }
         $this->entityManager->remove($usuario);
         $this->entityManager->flush();
-
-
+        
         return $this->json(['mensaje' => 'Usuario eliminado correctamente', 'success' => true], Response::HTTP_OK);
     }
 
