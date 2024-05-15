@@ -69,6 +69,11 @@ enviar_solicitud:
     path: /amistades/crear
     controller: App\Controller\AmistadesController::crearSolicitud
 
+eliminar_amistad:
+    path: /amistades/borrar
+    controller: App\Controller\AmistadesController::borrarAmistad
+
+
 obtener_peticiones_amistad:
     path: /amistades/obtenerPeticiones
     controller: App\Controller\AmistadesController::sendUserPetitionsNames
@@ -86,6 +91,3 @@ conseguir_top_songs:
     controller: App\Controller\apiTest::getTopSongs
     methods: ["GET"]
 
-amistades_borrar:
-    path: /amistades/borrar
-    controller: App\Controller\amistadesController::borrarAmistad
