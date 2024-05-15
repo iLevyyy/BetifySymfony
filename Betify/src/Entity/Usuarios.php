@@ -189,6 +189,4 @@ class Usuarios
     // {
     //     return $this->apuestasIdapuesta;
     // }
-
-
 }

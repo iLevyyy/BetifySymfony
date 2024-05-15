@@ -153,13 +153,25 @@ class UsuariosController extends AbstractController
     public function borrarUsuario(Request $request)
     {
         $data = json_decode($request->getContent(), true);
+        $AmistadesController = new AmistadesController($this->entityManager);
 
         $usuario = $this->entityManager->getRepository(Usuarios::class)->findOneBy(['nombreusuario' => $data['nombreUsuario']]);
         if (!$usuario) {
             return $this->json(['mensaje' => 'Usuario no encontrado', 'success' => false], Response::HTTP_OK);
         }
+
+        $amistades = $AmistadesController->getUserFriends($usuario->getIdUsuario());
+        foreach ($amistades as $key => $amistad) {
+            $this->entityManager->remove($amistad);
+        }
+        $solicitudes = $AmistadesController->getUserPetitions($usuario->getIdUsuario());
+        foreach ($solicitudes as $key => $solicitud) {
+            $this->entityManager->remove($solicitud);
+        }
         $this->entityManager->remove($usuario);
         $this->entityManager->flush();
+
+
         return $this->json(['mensaje' => 'Usuario eliminado correctamente', 'success' => true], Response::HTTP_OK);
     }
 
