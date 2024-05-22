@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Apuestas;
 use App\Entity\Artistas;
 use App\Entity\Canciones;
+use App\Entity\CancionesAuxiliar;
 use App\Entity\CancionesDia1;
 use App\Entity\CancionesDia2;
 use App\Entity\CancionesDia3;
@@ -138,7 +139,7 @@ class ApuestasController extends AbstractController
 
         for ($i = 0; $i < 10; $i++) {
             $cancionEnDia1 = $this->entityManager->getRepository(CancionesDia1::class)->findOneBy(['nombre' => $nombresDia1[$i]]);
-            $cancionEnDia0 = $this->entityManager->getRepository(Canciones::class)->findOneBy(['nombre' => $nombresDia1[$i]]);
+            $cancionEnDia0 = $this->entityManager->getRepository(CancionesAuxiliar::class)->findOneBy(['nombre' => $nombresDia1[$i]]);
             if ($cancionEnDia0 != null) {
                 if ($cancionEnDia1->getPuesto() > $cancionEnDia0->getPuesto()) {
                     array_push($resultados["subir"], $cancionEnDia1);
@@ -200,7 +201,11 @@ class ApuestasController extends AbstractController
             if ($apuesta->getTipo() == 'daily') {
                 $cancion = $apuesta->getcancionesIdcancion();
                 $accion = null;
-                foreach ($resultados as $move => $nombresCanciones) {
+                foreach ($resultados as $move => $listaCanciones) {
+                    $nombresCanciones = array();
+                    foreach ($listaCanciones as $key => $cancion) {
+                        array_push($nombresCanciones,$cancion->getNombre());
+                    }
                     if (in_array($cancion->getNombre(), $nombresCanciones)) {
                         $accion = $move;
                         break;
