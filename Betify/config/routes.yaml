@@ -32,7 +32,6 @@ borrar_usuario:
 conseguir_top_songs:
     path: /songs/getTop10
     controller: App\Controller\dataController::sendSongsCall
-    methods: ["GET"]
 
 usuario_check_admin:
     path: /usuarios/checkAdmin

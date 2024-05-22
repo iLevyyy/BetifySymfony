@@ -199,7 +199,6 @@ class ApuestasController extends AbstractController
         foreach ($apuestas as $apuesta) {
             if ($apuesta->getTipo() == 'daily') {
 
-
                 $cancion = $apuesta->getcancionesIdcancion();
                 $accion = null;
                 foreach ($resultados as $move => $nombresCanciones) {

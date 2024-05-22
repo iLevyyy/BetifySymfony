@@ -4,9 +4,11 @@ namespace App\Controller;
 
 use App\Entity\Artistas; // Ajustar el nombre de la entidad Artistas
 use App\Entity\Canciones;
+use App\Entity\CancionesAuxiliar;
 use App\Entity\CancionesDia1;
 use App\Entity\CancionesDia2;
 use App\Entity\CancionesDia3;
+use App\Entity\Apuestas;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -226,35 +228,72 @@ class DataController extends AbstractController
 
     public  function updateTop20DailySongs()
     {
+        $apuestasCount = $this->entityManager->getRepository(Apuestas::class)->count();
+        if ($apuestasCount != 0) {
 
-        $oldSongs = $this->entityManager->getRepository(CancionesDia1::class)->findAll();
-        foreach ($oldSongs as $oldSong) {
-            $this->entityManager->remove($oldSong);
+
+            $oldSongs = $this->entityManager->getRepository(CancionesDia1::class)->findAll();
+            foreach ($oldSongs as $oldSong) {
+                $this->entityManager->remove($oldSong);
+            }
+            $this->entityManager->flush();
+
+            $currentSongs = $this->entityManager->getRepository(Canciones::class)->findAll();
+            $currentSongsClassed = $this->changeClass($currentSongs);
+            foreach ($currentSongsClassed as $key => $song) {
+                $this->entityManager->persist($song);
+            }
+            $this->entityManager->flush();
+
+            $newOldSongs = $this->entityManager->getRepository(Canciones::class)->findAll();
+            foreach ($newOldSongs as $key => $song) {
+                $this->entityManager->remove($song);
+            }
+            $this->entityManager->flush();
+
+            $newSongs = $this->getTop20DailySongs();
+            foreach ($newSongs as $key => $newSong) {
+                $this->entityManager->persist($newSong);
+            }
+            $this->entityManager->flush();
+
+            $auxiliarSongs = $this->entityManager->getRepository(CancionesAuxiliar::class)->findAll();
+            foreach ($auxiliarSongs as $key => $song) {
+                $this->entityManager->remove($song);
+            }
+            $auxiliarSongsChangedClass =  $this->changeToAuxiliarClass($newSongs = $this->getTop20DailySongs());
+            foreach ($auxiliarSongsChangedClass as $key => $song) {
+                $this->entityManager->persist($song);
+            }
+            $this->entityManager->flush();
+        } else {
+            $auxiliarSongs = $this->entityManager->getRepository(CancionesAuxiliar::class)->findAll();
+            foreach ($auxiliarSongs as $key => $song) {
+                $this->entityManager->remove($song);
+            }
+            $auxiliarSongsChangedClass =  $this->changeToAuxiliarClass($newSongs = $this->getTop20DailySongs());
+            foreach ($auxiliarSongsChangedClass as $key => $song) {
+                $this->entityManager->persist($song);
+            }
+            $this->entityManager->flush();
+            return $this->json(['success' => true, 'message' => 'Hay apuestas pendientes, canciones auxiliares actualizadas',], Response::HTTP_OK);
         }
-        $this->entityManager->flush();
-
-        $currentSongs = $this->entityManager->getRepository(Canciones::class)->findAll();
-        $currentSongsClassed = $this->changeClass($currentSongs);
-        foreach ($currentSongsClassed as $key => $song) {
-            $this->entityManager->persist($song);
-        }
-        $this->entityManager->flush();
-
-        $newOldSongs = $this->entityManager->getRepository(Canciones::class)->findAll();
-        foreach ($newOldSongs as $key => $song) {
-            $this->entityManager->remove($song);
-        }
-        $this->entityManager->flush();
-
-        $newSongs = $this->getTop20DailySongs();
-        foreach ($newSongs as $key => $newSong) {
-            $this->entityManager->persist($newSong);
-        }
-        $this->entityManager->flush();
-
 
 
         return $this->json(['success' => true, 'message' => 'Canciones actualizadas correctamente',], Response::HTTP_OK);
+    }
+    public function changeToAuxiliarClass($songs)
+    {
+        $changedSongs = array();
+        foreach ($songs as $key => $song) {
+            $changedSong = new CancionesAuxiliar();
+            $changedSong->setNombre($song->getNombre());
+            $changedSong->setPuesto($song->getPuesto());
+            $changedSong->setArtista($song->getArtista());
+            //$changedSong->setReproducciones($song->getReproducciones());
+            array_push($changedSongs, $changedSong);
+        }
+        return $changedSongs;
     }
     public function changeClass($songs)
     {
@@ -269,18 +308,24 @@ class DataController extends AbstractController
         }
         return $changedSongs;
     }
-    public function updateDailySongsRequest(Request $request){
-        $this->updateTop20DailySongs();  
+    public function updateDailySongsRequest(Request $request)
+    {
+        $this->updateTop20DailySongs();
         return $this->json(['message' => 'Canciones actualizadas correctamente', 'success' => true], Response::HTTP_OK);
     }
     public function sendSongsCall(Request $request)
     {
         //$this->updateTop20DailySongs();  
-        $canciones = $this->entityManager->getRepository(Canciones::class)->findAll();
+        $apuestasCount = $this->entityManager->getRepository(Apuestas::class)->count();
+        if ($apuestasCount == 0) {
+            $canciones = $this->entityManager->getRepository(Canciones::class)->findAll();
+        } else {
+            $canciones = $this->entityManager->getRepository(CancionesAuxiliar::class)->findAll();
+        }
         $cancionesBien = [];
         foreach ($canciones as $key => $cancion) {
             $cancionInfo = ["Puesto" => $cancion->getPuesto(), "Cancion" => $cancion->getNombre(), "Artista" => $cancion->getArtista()];
-            array_push($cancionesBien,$cancionInfo);
+            array_push($cancionesBien, $cancionInfo);
         }
         return $this->json(['canciones' => $cancionesBien, 'success' => true], Response::HTTP_OK);
     }
