@@ -72,8 +72,8 @@ class Apuestas
     /**
      * @var \Usuarios
      *
-     * @ORM\ManyToOne(targetEntity="Usuarios", inversedBy="apuestas", cascade={"remove"})
-     * @ORM\JoinColumn(name="Usuarios_idUsuario", referencedColumnName="idUsuario", onDelete="CASCADE")
+     * @ORM\ManyToOne(targetEntity="Usuarios", inversedBy="apuestas")
+     * @ORM\JoinColumn(name="Usuarios_idUsuario", referencedColumnName="idUsuario")
      */
     private $usuario;
 
