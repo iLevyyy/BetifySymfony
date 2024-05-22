@@ -265,6 +265,7 @@ class DataController extends AbstractController
                 $this->entityManager->persist($song);
             }
             $this->entityManager->flush();
+            return $this->json(['success' => true, 'message' => 'Canciones actualizadas correctamente',], Response::HTTP_OK);
         } else {
             $auxiliarSongs = $this->entityManager->getRepository(CancionesAuxiliar::class)->findAll();
             foreach ($auxiliarSongs as $key => $song) {
@@ -277,7 +278,6 @@ class DataController extends AbstractController
             $this->entityManager->flush();
             return $this->json(['success' => true, 'message' => 'Hay apuestas pendientes, canciones auxiliares actualizadas',], Response::HTTP_OK);
         }
-        return $this->json(['success' => true, 'message' => 'Canciones actualizadas correctamente',], Response::HTTP_OK);
     }
     public function changeToAuxiliarClass($songs)
     {
