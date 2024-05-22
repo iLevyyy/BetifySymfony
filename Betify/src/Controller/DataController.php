@@ -318,7 +318,6 @@ class DataController extends AbstractController
     {
         //$this->updateTop20DailySongs();  
         $canciones = $this->entityManager->getRepository(Canciones::class)->findAll();
-
         $cancionesBien = [];
         foreach ($canciones as $key => $cancion) {
             $cancionInfo = ["Puesto" => $cancion->getPuesto(), "Cancion" => $cancion->getNombre(), "Artista" => $cancion->getArtista()];
