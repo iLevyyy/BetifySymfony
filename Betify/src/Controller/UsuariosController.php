@@ -70,7 +70,7 @@ class UsuariosController extends AbstractController
             $id = $usuario->getIdUsuario();
             $solicitudesNombres = (new AmistadesController($this->entityManager))->getUserPetitionsNames($usuario->getIdUsuario());
             $amistadesNombres = (new AmistadesController($this->entityManager))->getUserFriendsNames($usuario->getIdUsuario());
-            return $this->json(['boolean' => true, 'token' => $id, 'creditos' => $usuario->getCreditos(), 'solicitudesnombres' => $solicitudesNombres, 'amistadesombres' => $amistadesNombres, 'amistadesombres' => $amistadesNombres, 'nombreUsuario' => $usuario->getNombreUsuario(), 'emailUsuario' => $usuario->getEmail()], Response::HTTP_OK);
+            return $this->json(['boolean' => true, 'token' => $id, 'creditos' => $usuario->getCreditos(), 'solicitudesnombres' => $solicitudesNombres, 'amistadesnombres' => $amistadesNombres, 'nombreUsuario' => $usuario->getNombreUsuario(), 'emailUsuario' => $usuario->getEmail()], Response::HTTP_OK);
         } else {
             return $this->json(['boolean' => false, 'message' => 'Correo o contraseña incorrectos'], Response::HTTP_OK);
         }
