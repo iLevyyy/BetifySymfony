@@ -211,6 +211,7 @@ class ApuestasController extends AbstractController
                         break;
                     }
                 }
+            
                 if ($apuesta->getPrediccion() == $accion) {
                     $usuario = $apuesta->getUsuario();
                     $usuario->setCreditos($usuario->getCreditos() + $apuesta->getCantidad() * $apuesta->getCuota());
