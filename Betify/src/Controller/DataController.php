@@ -307,8 +307,7 @@ class DataController extends AbstractController
     }
     public function updateDailySongsRequest(Request $request)
     {
-        $this->updateTop20DailySongs();
-        return $this->json(['message' => 'Canciones actualizadas correctamente', 'success' => true], Response::HTTP_OK);
+        return $this->updateTop20DailySongs();
     }
     public function sendSongsCall(Request $request)
     {
