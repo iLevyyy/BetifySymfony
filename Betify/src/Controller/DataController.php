@@ -317,13 +317,8 @@ class DataController extends AbstractController
     public function sendSongsCall(Request $request)
     {
         //$this->updateTop20DailySongs();  
-        $apuestas = $this->entityManager->getRepository(Apuestas::class)->findAll();
-        $apuestasCount = count($apuestas);
-        if ($apuestasCount == 0) {
-            $canciones = $this->entityManager->getRepository(Canciones::class)->findAll();
-        } else {
-            $canciones = $this->entityManager->getRepository(CancionesAuxiliar::class)->findAll();
-        }
+        $canciones = $this->entityManager->getRepository(Canciones::class)->findAll();
+
         $cancionesBien = [];
         foreach ($canciones as $key => $cancion) {
             $cancionInfo = ["Puesto" => $cancion->getPuesto(), "Cancion" => $cancion->getNombre(), "Artista" => $cancion->getArtista()];
