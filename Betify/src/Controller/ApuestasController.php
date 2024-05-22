@@ -131,9 +131,9 @@ class ApuestasController extends AbstractController
             array_push($nombresDia1, $nombre);
         }
         $resultados = [
-            "up" => [],
-            "down" => [],
-            "stay" => []
+            "subir" => [],
+            "bajar" => [],
+            "mantener" => []
         ];
 
         for ($i = 0; $i < 10; $i++) {
@@ -198,7 +198,6 @@ class ApuestasController extends AbstractController
         $resultados = $this->checkSongPosition($entityManager); // Suponiendo que checkSongPosition devuelve $resultados correctamente
         foreach ($apuestas as $apuesta) {
             if ($apuesta->getTipo() == 'daily') {
-
                 $cancion = $apuesta->getcancionesIdcancion();
                 $accion = null;
                 foreach ($resultados as $move => $nombresCanciones) {
