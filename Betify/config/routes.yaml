@@ -34,8 +34,6 @@ conseguir_top_songs:
     controller: App\Controller\dataController::sendSongsCall
     methods: ["GET"]
 
-
-
 usuario_check_admin:
     path: /usuarios/checkAdmin
     controller: App\Controller\UsuariosController::checkAdmin
@@ -70,8 +68,8 @@ Json_BBDD:
     controller: App\Controller\storage\DataController::insertarDatosDesdeJson
 
 actualizar_canciones_BBDD:
-    path: /canciones/actualizar
-    controller: App\Controller\DataController::updateTop20DailySongs
+    path: /songs/actualizar
+    controller: App\Controller\DataController::updateDailySongsRequest
 
 enviar_solicitud:
     path: /amistades/crear
@@ -93,5 +91,4 @@ obtener_amistades:
 gestionar_solicitud:
     path: /amistades/gestionar
     controller: App\Controller\AmistadesController::gestionarSolicitud
-
 

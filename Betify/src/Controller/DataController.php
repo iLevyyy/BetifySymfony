@@ -269,9 +269,13 @@ class DataController extends AbstractController
         }
         return $changedSongs;
     }
+    public function updateDailySongsRequest(Request $request){
+        $this->updateTop20DailySongs();  
+        return $this->json(['message' => 'Canciones actualizadas correctamente', 'success' => true], Response::HTTP_OK);
+    }
     public function sendSongsCall(Request $request)
     {
-        $this->updateTop20DailySongs();
+        //$this->updateTop20DailySongs();  
         $canciones = $this->entityManager->getRepository(Canciones::class)->findAll();
         $cancionesBien = [];
         foreach ($canciones as $key => $cancion) {
