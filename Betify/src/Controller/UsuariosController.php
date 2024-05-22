@@ -76,6 +76,13 @@ class UsuariosController extends AbstractController
         }
     }
 
+    public function getCreditos(Request $request)
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $usuario = $this->entityManager->getRepository(Usuarios::class)->findOneBy(['idusuario' => $data['token']]);
+        return $this->json(['boolean' => true, 'message' => 'creditos enviados', 'creditos' => $usuario->getCreditos()], Response::HTTP_OK);
+    }
     public function crearUsuario(Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
@@ -170,7 +177,7 @@ class UsuariosController extends AbstractController
         }
         $this->entityManager->remove($usuario);
         $this->entityManager->flush();
-        
+
         return $this->json(['mensaje' => 'Usuario eliminado correctamente', 'success' => true], Response::HTTP_OK);
     }
 

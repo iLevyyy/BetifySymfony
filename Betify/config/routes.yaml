@@ -28,7 +28,6 @@ borrar_usuario:
     path: /admin/borrarUsuario
     controller: App\Controller\UsuariosController::borrarUsuario
 
-
 conseguir_top_songs:
     path: /songs/getTop10
     controller: App\Controller\dataController::sendSongsCall
@@ -66,6 +65,10 @@ Json_BBDD:
     path: /insertar-datos-desde-json
     controller: App\Controller\storage\DataController::insertarDatosDesdeJson
 
+Creditos_get:
+    path: /usuarios/creditos
+    controller: App\Controller\UsuariosController::getCreditos
+
 actualizar_canciones_BBDD:
     path: /songs/actualizar
     controller: App\Controller\DataController::updateDailySongsRequest
@@ -78,7 +81,6 @@ eliminar_amistad:
     path: /amistades/borrar
     controller: App\Controller\AmistadesController::borrarAmistad
 
-
 obtener_peticiones_amistad:
     path: /amistades/obtenerPeticiones
     controller: App\Controller\AmistadesController::sendUserPetitionsNames
@@ -90,4 +92,3 @@ obtener_amistades:
 gestionar_solicitud:
     path: /amistades/gestionar
     controller: App\Controller\AmistadesController::gestionarSolicitud
-
