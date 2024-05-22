@@ -141,14 +141,14 @@ class ApuestasController extends AbstractController
             $cancionEnDia0 = $this->entityManager->getRepository(Canciones::class)->findOneBy(['nombre' => $nombresDia1[$i]]);
             if ($cancionEnDia0 != null) {
                 if ($cancionEnDia1->getPuesto() > $cancionEnDia0->getPuesto()) {
-                    array_push($resultados["up"], $cancionEnDia1);
+                    array_push($resultados["subir"], $cancionEnDia1);
                 } elseif ($cancionEnDia1->getPuesto() < $cancionEnDia0->getPuesto()) {
-                    array_push($resultados["down"], $cancionEnDia1);
+                    array_push($resultados["bajar"], $cancionEnDia1);
                 } else {
-                    array_push($resultados["stay"], $cancionEnDia1);
+                    array_push($resultados["mantener"], $cancionEnDia1);
                 }
             } else {
-                array_push($resultados["down"], $cancionEnDia1);
+                array_push($resultados["bajar"], $cancionEnDia1);
             }
         }
         return $resultados;
