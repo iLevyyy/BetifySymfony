@@ -172,7 +172,7 @@ class Apuestas
      */
     public function getPrediccion(): string
     {
-        return $this->cantidad;
+        return $this->prediccion;
     }
     /**
      * Establecer el valor de prediccion
