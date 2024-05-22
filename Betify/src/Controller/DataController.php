@@ -228,7 +228,8 @@ class DataController extends AbstractController
 
     public  function updateTop20DailySongs()
     {
-        $apuestasCount = $this->entityManager->getRepository(Apuestas::class)->count();
+        $apuestas = $this->entityManager->getRepository(Apuestas::class)->findAll();
+        $apuestasCount = count($apuestas);
         if ($apuestasCount != 0) {
 
 
@@ -316,7 +317,8 @@ class DataController extends AbstractController
     public function sendSongsCall(Request $request)
     {
         //$this->updateTop20DailySongs();  
-        $apuestasCount = $this->entityManager->getRepository(Apuestas::class)->count();
+        $apuestas = $this->entityManager->getRepository(Apuestas::class)->findAll();
+        $apuestasCount = count($apuestas);
         if ($apuestasCount == 0) {
             $canciones = $this->entityManager->getRepository(Canciones::class)->findAll();
         } else {
