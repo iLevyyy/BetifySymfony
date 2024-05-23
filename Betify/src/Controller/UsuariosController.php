@@ -87,7 +87,9 @@ class UsuariosController extends AbstractController
         $data = json_decode($request->getContent(), true);
 
         $usuario = new Usuarios();
-
+        if ($data['NombreUsuario'] == null || $data['Password'] == null){
+            return $this->json(['mensaje' => 'Los campos deben estar llenos', 'boolean' => false,], Response::HTTP_OK);
+        }
         $usuario->setNombreUsuario($data['NombreUsuario']);
         $usuario->setPassword($data['Password']);
         $usuario->setEmail($data['Email']);
