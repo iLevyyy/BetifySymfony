@@ -2,6 +2,7 @@ controllers:
     resource: ../src/Controller/
     type: attribute
 
+# Funcionalidad: Usuarios
 usuario_login:
     path: /usuarios/login
     controller: App\Controller\UsuariosController::loginUsuarios
@@ -28,22 +29,33 @@ borrar_usuario:
     path: /admin/borrarUsuario
     controller: App\Controller\UsuariosController::borrarUsuario
 
-conseguir_top_songs:
-    path: /songs/getTop10
-    controller: App\Controller\dataController::sendSongsCall
-
 usuario_check_admin:
     path: /usuarios/checkAdmin
     controller: App\Controller\UsuariosController::checkAdmin
+
+Creditos_get:
+    path: /usuarios/creditos
+    controller: App\Controller\UsuariosController::getCreditos
+
+# Funcionalidad: Canciones
+conseguir_top_songs:
+    path: /songs/getTop10
+    controller: App\Controller\dataController::sendSongsCall
 
 cancion_listar:
     path: /cancion/listar
     controller: App\Controller\CancionesController::listarCancion
 
+actualizar_canciones_BBDD:
+    path: /songs/actualizar
+    controller: App\Controller\DataController::updateDailySongsRequest
+
+# Funcionalidad: Artistas
 artistas_listar:
     path: /artista/listar
     controller: App\Controller\ArtistasController::listarArtista
 
+# Funcionalidad: Apuestas
 apuesta_listar:
     path: /apuestas/listar
     controller: App\Controller\ApuestasController::listarApuestas
@@ -61,18 +73,12 @@ alogirtmo_listar:
     path: /algoritmo/test
     controller: App\Controller\ApuestasController::checkSongPosition
 
+# Funcionalidad: Almacenamiento
 Json_BBDD:
     path: /insertar-datos-desde-json
     controller: App\Controller\storage\DataController::insertarDatosDesdeJson
 
-Creditos_get:
-    path: /usuarios/creditos
-    controller: App\Controller\UsuariosController::getCreditos
-
-actualizar_canciones_BBDD:
-    path: /songs/actualizar
-    controller: App\Controller\DataController::updateDailySongsRequest
-
+# Funcionalidad: Amistades
 enviar_solicitud:
     path: /amistades/crear
     controller: App\Controller\AmistadesController::crearSolicitud

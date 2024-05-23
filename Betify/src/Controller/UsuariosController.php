@@ -79,7 +79,6 @@ class UsuariosController extends AbstractController
     public function getCreditos(Request $request)
     {
         $data = json_decode($request->getContent(), true);
-
         $usuario = $this->entityManager->getRepository(Usuarios::class)->findOneBy(['idusuario' => $data['token']]);
         return $this->json(['boolean' => true, 'message' => 'creditos enviados', 'creditos' => $usuario->getCreditos()], Response::HTTP_OK);
     }
