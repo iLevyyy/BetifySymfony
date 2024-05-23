@@ -204,14 +204,14 @@ class ApuestasController extends AbstractController
                 foreach ($resultados as $move => $listaCanciones) {
                     $nombresCanciones = array();
                     foreach ($listaCanciones as $key => $cancion) {
-                        array_push($nombresCanciones,$cancion->getNombre());
+                        array_push($nombresCanciones, $cancion->getNombre());
                     }
                     if (in_array($cancion->getNombre(), $nombresCanciones)) {
                         $accion = $move;
                         break;
                     }
                 }
-            
+
                 if ($apuesta->getPrediccion() == $accion) {
                     $usuario = $apuesta->getUsuario();
                     $usuario->setCreditos($usuario->getCreditos() + $apuesta->getCantidad() * $apuesta->getCuota());
@@ -221,7 +221,8 @@ class ApuestasController extends AbstractController
         }
         // Guarda los cambios en la base de datos
         $entityManager->flush();
-        return new Response('Apuestas comprobadas correctamente');
+        //return new Response('Apuestas comprobadas correctamente');
+        return $this->json(['mensaje' => 'Apuestas comprobadas correctamente', 'success' => true], Response::HTTP_OK);
     }
     public function actualizarCreditosWeekly(EntityManagerInterface $entityManager)
     {
