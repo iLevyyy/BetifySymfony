@@ -77,6 +77,11 @@ alogirtmo_listar:
     path: /algoritmo/test
     controller: App\Controller\ApuestasController::checkSongPosition
 
+get_usuario_apuestas:
+    path: /apuestas/activas
+    controller: App\Controller\ApuestasController::getUserApuestas
+
+
 # Funcionalidad: Almacenamiento
 Json_BBDD:
     path: /insertar-datos-desde-json

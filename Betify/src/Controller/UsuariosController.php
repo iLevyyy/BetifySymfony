@@ -224,6 +224,6 @@ class UsuariosController extends AbstractController
             $usuario->setCreditos($usuario->getCreditos() + $data['creditos']);
         }
         $this->entityManager->flush();
-        return $this->json(['success' => true, 'mensaje' => 'Se han otorgado ' . $data['creditos'] . 'creditos a cada usuario'], Response::HTTP_OK);
+        return $this->json(['success' => true, 'mensaje' => 'Se han otorgado ' . $data['creditos'] . ' creditos a cada usuario'], Response::HTTP_OK);
     }
 }

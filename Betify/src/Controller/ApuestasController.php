@@ -253,4 +253,23 @@ class ApuestasController extends AbstractController
         $entityManager->flush();
         return new Response('Apuestas comprobadas correctamente');
     }
+
+    public function getUserApuestas(Request $request)
+    {
+        $data = json_decode($request->getContent(), true);
+        $token = $data['token'];
+
+        $apuestas = $this->entityManager->getRepository(Apuestas::class)->findBy(['usuario' => $token]);
+        if (!$apuestas) {
+            return $this->json(['mensaje' => 'No tienes apuestas activas', 'success' => false], Response::HTTP_OK);
+        }
+        $apuestasBonito = array();
+
+        $apuestasBonito = [];
+        foreach ($apuestasBonito as $key => $apuesta) {
+            $apuestaInfo = ["Nombre" => $apuesta->getcancionesIdCancion()->getNombre(), "Cantidad" => $apuesta->getCantidad(), "Prediccion" => $apuesta->getPrediccion(), "Tipo" => $apuesta->getTipo()];
+            array_push($apuestasBonito, $apuestaInfo);
+        }
+        return $this->json(['mensaje' => 'Enviando apuestas activas del usuario', 'success' => true, 'apuestas' => $apuestasBonito], Response::HTTP_OK);
+    }
 }
