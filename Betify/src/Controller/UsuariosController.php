@@ -223,6 +223,6 @@ class UsuariosController extends AbstractController
         foreach ($usuarios as $key => $usuario) {
             $usuario->setCreditos($usuario->getCreditos() + $data['creditos']);
         }
-        return $this->json(['success' => true, 'mensaje' => 'Se han otorgado ' + $data['creditos'] + 'creditos a cada usuario'], Response::HTTP_OK);
+        return $this->json(['success' => true, 'mensaje' => 'Se han otorgado ' . $data['creditos'] . 'creditos a cada usuario'], Response::HTTP_OK);
     }
 }
