@@ -266,7 +266,7 @@ class ApuestasController extends AbstractController
         $apuestasBonito = array();
 
         $apuestasBonito = [];
-        foreach ($apuestasBonito as $key => $apuesta) {
+        foreach ($apuestas as $key => $apuesta) {
             $apuestaInfo = ["Nombre" => $apuesta->getcancionesIdCancion()->getNombre(), "Cantidad" => $apuesta->getCantidad(), "Prediccion" => $apuesta->getPrediccion(), "Tipo" => $apuesta->getTipo()];
             array_push($apuestasBonito, $apuestaInfo);
         }
