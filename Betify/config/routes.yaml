@@ -37,6 +37,10 @@ Creditos_get:
     path: /usuarios/creditos
     controller: App\Controller\UsuariosController::getCreditos
 
+daily_creditos:
+    path: /usuarios/dailyCreditos
+    controller: App\Controller\UsuariosController::dailyCredits
+
 # Funcionalidad: Canciones
 conseguir_top_songs:
     path: /songs/getTop10

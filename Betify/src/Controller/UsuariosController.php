@@ -211,4 +211,18 @@ class UsuariosController extends AbstractController
             return $this->json(['success' => false, 'mensaje' => 'Contenido restringido'], Response::HTTP_OK);
         }
     }
+    public function dailyCredits(Request $request)
+    {
+        $data = json_decode($request->getContent(), true);
+
+        if (!$data['creditos']) {
+            return $this->json(['success' => false, 'mensaje' => 'No se ha indicado cuantos creditos otorgar'], Response::HTTP_OK);
+        }
+
+        $usuarios = $this->entityManager->getRepository(Usuarios::class)->findAll();
+        foreach ($usuarios as $key => $usuario) {
+            $usuario->setCreditos($usuario->getCreditos() + $data['creditos']);
+        }
+        return $this->json(['success' => true, 'mensaje' => 'Se han otorgado ' + $data['creditos'] + 'creditos a cada usuario'], Response::HTTP_OK);
+    }
 }
