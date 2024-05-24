@@ -154,8 +154,8 @@ class UsuariosController extends AbstractController
         }
 
         $this->entityManager->flush();
-        $datos = [$usuario->getEmail(), $usuario->getNombreUsuario()];
-        return $this->json(['mensaje' => 'Usuario actualizado correctamente', 'boolean' => true, "datos" => $datos], Response::HTTP_OK);
+        $datos = [$usuario->getEmail(), ];
+        return $this->json(['mensaje' => 'Usuario actualizado correctamente', 'boolean' => true, "nombreUsuario" => $usuario->getNombreUsuario(), "emailUsuario" => $usuario->getEmail()], Response::HTTP_OK);
     }
 
     public function borrarUsuario(Request $request)
