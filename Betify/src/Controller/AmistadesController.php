@@ -146,11 +146,13 @@ class AmistadesController extends AbstractController
         $nombres = [];
         foreach ($amistades as $amistad) {
             if ($amistad->getUsuario1()->getIdUsuario() != $token) {
-                array_push($nombres, $amistad->getUsuario1()->getNombreUsuario());
-                $nombres[$amistad->getUsuario1()->getNombreUsuario()] = $amistad->getUsuario1()->getCreditos();
+                $completo = [$amistad->getUsuario1()->getNombreUsuario(), $amistad->getUsuario1()->getCreditos()];
+                array_push($nombres, $completo);
+                //$nombres[$amistad->getUsuario1()->getNombreUsuario()] = $amistad->getUsuario1()->getCreditos();
             } elseif ($amistad->getUsuario2()->getIdUsuario() != $token) {
-                array_push($nombres, $amistad->getUsuario2()->getNombreUsuario());
-                $nombres[$amistad->getUsuario2()->getNombreUsuario()] = $amistad->getUsuario2()->getCreditos();
+                $completo = [$amistad->getUsuario2()->getNombreUsuario(), $amistad->getUsuario2()->getCreditos()];
+                array_push($nombres, $completo);
+                //$nombres[$amistad->getUsuario2()->getNombreUsuario()] = $amistad->getUsuario2()->getCreditos();
             }
         }
         return $nombres;
