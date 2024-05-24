@@ -86,8 +86,8 @@ class UsuariosController extends AbstractController
     {
         $data = json_decode($request->getContent(), true);
 
-        $usuario = new Usuarios(); 
-        if ($data['NombreUsuario'] == null || $data['Password'] == null){
+        $usuario = new Usuarios();
+        if ($data['NombreUsuario'] == null || $data['Password'] == null) {
             return $this->json(['mensaje' => 'Los campos deben estar llenos', 'boolean' => false,], Response::HTTP_OK);
         }
         $usuario->setNombreUsuario($data['NombreUsuario']);
@@ -154,8 +154,8 @@ class UsuariosController extends AbstractController
         }
 
         $this->entityManager->flush();
-
-        return $this->json(['mensaje' => 'Usuario actualizado correctamente', 'boolean' => true], Response::HTTP_OK);
+        $datos = [$usuario->getEmail(), $usuario->getNombreUsuario()];
+        return $this->json(['mensaje' => 'Usuario actualizado correctamente', 'boolean' => true, "datos" => $datos], Response::HTTP_OK);
     }
 
     public function borrarUsuario(Request $request)
